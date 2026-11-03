@@ -9,6 +9,7 @@
  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
  <link rel="stylesheet" href="/static/style.css">
  <script src="/static/app.js" defer></script>
+ <script src="/static/i18n.js?v=1" defer></script>
 </head>
 <body>
 <div class="layout">
@@ -25,7 +26,7 @@
   <div class="sidebar-bottom"><div class="pulse-line"><i></i><span>Weather feed: <b id="side-weather">بانتظار الاتصال</b></span></div><p>تطبيق بحثي للتنبؤات، مع فصل واضح بين الأرصاد المباشرة وتجربة الترافيك التاريخية.</p><span class="edition">TrafficVision / Version 2.0</span></div>
  </aside>
  <div class="workspace">
-  <header class="topbar"><div class="titlebar"><button class="menu" id="menuButton" aria-label="إظهار القائمة">☰</button><div><span class="breadcrumbs">INTELLIGENT MOBILITY / JAZAN UNIVERSITY</span><strong id="headerName">لوحة المتابعة</strong></div></div><div class="top-right"><span class="pill"><span class="pulse"></span>Academic prototype</span><span class="top-clock" id="clock">—</span></div></header>
+  <header class="topbar"><div class="titlebar"><button class="menu" id="menuButton" aria-label="إظهار القائمة">☰</button><div><span class="breadcrumbs">INTELLIGENT MOBILITY / JAZAN UNIVERSITY</span><strong id="headerName">لوحة المتابعة</strong></div></div><div class="top-right"><button class="language-toggle" id="language-toggle" type="button" aria-label="Switch to English" lang="en">English</button><span class="pill"><span class="pulse"></span>Academic prototype</span><span class="top-clock" id="clock">—</span></div></header>
   <main>
    <section id="overview" class="screen active">
     <div class="hero"><div><span class="hero-label">SMART FORECASTING EXPERIENCE <em>●</em> DATA-DRIVEN</span><h1>رؤية أوضح للطقس<br>وحركة <span>المرور.</span></h1><p>الطقس المستقبلي، وتجربة التنبؤ بمرور I‑94 التاريخي، ومحاكاة مستقلة لمدينة جيزان — كل مصدر موضح بوضوح.</p><div class="hero-links"><button class="btn light" data-go="history">استكشف حركة المرور <span>←</span></button><button class="btn outline-light" data-go="lab">اختبر عينة بنفسك ↗</button></div></div></div>
@@ -93,6 +94,7 @@
     <div class="notice"><span>✓</span><p>ملاحظة للدكتور: التطبيق يوصل فكرة عرض توقعات الأرصاد مع التنبؤ بحجم المرور، مع شاشة للتحقق من التوقعات واختبار مدخلات جديدة. الدمج الفعلي بين الأرصاد وحركة المرور في جازان يتطلب بيانات مرورية محلية ومزامنة زمنية بين المصدرين.</p></div>
    </section>
   </main>
+  <div class="team-credit"><span>تطوير الموقع</span><strong>نايف <i>·</i> إبراهيم <i>·</i> عبدالله</strong></div>
   <footer class="footer"><span>© 2026 TrafficVision · Graduation Project</span><span>Historical I‑94 traffic • Live forecast weather • Transparent research demo</span></footer>
  </div>
 </div>
