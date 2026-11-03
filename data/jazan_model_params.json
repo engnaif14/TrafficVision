@@ -1,0 +1,36 @@
+{
+  "model": "SARIMA(1,0,0)(1,1,0,24) on synthetic reference series",
+  "reference_end": "2026-10-01T13:00:00+03:00",
+  "roads": {
+    "king_fahd": {
+      "params": [
+        0.7372009292399915,
+        -0.4749888005366494,
+        3068.9755294906813
+      ],
+      "mae": 55.9,
+      "rmse": 71.8,
+      "fit_converged": true
+    },
+    "king_abdulaziz": {
+      "params": [
+        0.720913167389312,
+        -0.4809206289306429,
+        2196.4267300095185
+      ],
+      "mae": 51.7,
+      "rmse": 63.9,
+      "fit_converged": true
+    },
+    "city_centre": {
+      "params": [
+        0.6913996559912625,
+        -0.48555770491031847,
+        1711.663078421186
+      ],
+      "mae": 42.4,
+      "rmse": 55.2,
+      "fit_converged": true
+    }
+  }
+}

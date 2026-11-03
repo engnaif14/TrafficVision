@@ -1,0 +1,34 @@
+{
+  "model_family": "SARIMA",
+  "model_type": "historical one-step replay",
+  "traffic_region": "Interstate 94 westbound, Minnesota, USA",
+  "traffic_source": "UCI Metro Interstate Traffic Volume",
+  "traffic_period": "2012-10 to 2018-09",
+  "source_raw_rows": 48204,
+  "source_unique_hours": 40575,
+  "fit_range": "2018-07-01 to 2018-08-31",
+  "test_range": "2018-09-01 to 2018-09-30",
+  "train_hours": 1488,
+  "test_observed_hours": 720,
+  "gaps_in_selected_window_for_hourly_regularization": 4,
+  "gap_note": "The dataset states no missing column values. Time gaps are absent timestamp rows, not missing cells. Limited to selected training/replay window; interpolated internally for regular SARIMA steps, never shown as actual observations.",
+  "mae": 322.2236111111111,
+  "rmse": 521.5230593069581,
+  "params": {
+    "intercept": 3.6142200469930423,
+    "ar.L1": 0.8696169037489588,
+    "ar.S.L24": -0.1246166335974778,
+    "sigma2": 229999.99511068818
+  },
+  "order": [
+    1,
+    0,
+    0
+  ],
+  "seasonal_order": [
+    1,
+    1,
+    0,
+    24
+  ]
+}
