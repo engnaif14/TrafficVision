@@ -1,0 +1,5 @@
+numpy>=1.26,<3
+pandas>=2.1,<3
+statsmodels>=0.14.4,<0.15
+gunicorn>=22,<24
+tzdata>=2025.2

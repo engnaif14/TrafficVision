@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+ <meta name="theme-color" content="#071e2c"><meta name="description" content="TrafficVision - تطبيق مشروع التخرج: طقس متوقع حي، وتنبؤ مرور قابل للاختبار من بيانات تاريخية موثقة.">
+ <title>TrafficVision | Smart Traffic & Weather</title>
+ <link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+ <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="/static/style.css">
+ <script src="/static/app.js" defer></script>
+</head>
+<body>
+<div class="layout">
+ <aside class="sidebar" id="sidebar">
+  <a class="brand" href="#overview"><span class="logo">◈</span><span><strong>Traffic<span>Vision</span></strong><small>GRADUATION PROJECT · 2026</small></span></a>
+  <div class="nav-label">WORKSPACE / مساحة العمل</div>
+  <nav class="navigation">
+   <button class="nav active" data-screen="overview"><span class="nav-icon">◫</span> لوحة المتابعة <small>01</small></button>
+   <button class="nav" data-screen="history"><span class="nav-icon">◷</span> حركة المرور التاريخية <small>02</small></button>
+   <button class="nav" data-screen="lab"><span class="nav-icon">⟡</span> اختبار عينة <small>03</small></button>
+   <button class="nav" data-screen="jazan"><span class="nav-icon">⌁</span> محاكاة مدينة جيزان <small>04</small></button>
+   <button class="nav" data-screen="sources"><span class="nav-icon">▤</span> شرح المنصة والمصادر <small>05</small></button>
+  </nav>
+  <div class="sidebar-bottom"><div class="pulse-line"><i></i><span>Weather feed: <b id="side-weather">بانتظار الاتصال</b></span></div><p>تطبيق بحثي للتنبؤات، مع فصل واضح بين الأرصاد المباشرة وتجربة الترافيك التاريخية.</p><span class="edition">TrafficVision / Version 2.0</span></div>
+ </aside>
+ <div class="workspace">
+  <header class="topbar"><div class="titlebar"><button class="menu" id="menuButton" aria-label="إظهار القائمة">☰</button><div><span class="breadcrumbs">INTELLIGENT MOBILITY / JAZAN UNIVERSITY</span><strong id="headerName">لوحة المتابعة</strong></div></div><div class="top-right"><span class="pill"><span class="pulse"></span>Academic prototype</span><span class="top-clock" id="clock">—</span></div></header>
+  <main>
+   <section id="overview" class="screen active">
+    <div class="hero"><div><span class="hero-label">SMART FORECASTING EXPERIENCE <em>●</em> DATA-DRIVEN</span><h1>رؤية أوضح للطقس<br>وحركة <span>المرور.</span></h1><p>الطقس المستقبلي، وتجربة التنبؤ بمرور I‑94 التاريخي، ومحاكاة مستقلة لمدينة جيزان — كل مصدر موضح بوضوح.</p><div class="hero-links"><button class="btn light" data-go="history">استكشف حركة المرور <span>←</span></button><button class="btn outline-light" data-go="lab">اختبر عينة بنفسك ↗</button></div></div></div>
+    <div class="section-heading"><div><small class="eyebrow">OVERVIEW / نظرة شاملة</small><h2>التنبؤات في مكان واحد</h2></div><span class="subtle">مصدران مختلفان، مع توضيح توقيت كل بيانات</span></div>
+    <div class="kpis">
+     <article class="kpi"><div class="kpi-label"><span class="kpi-icon sun">☀</span><span>توقعات الطقس القادمة</span></div><strong id="kpi-temp">—<sup>°C</sup></strong><p><span id="kpi-weather-desc">بانتظار بيانات الأرصاد</span> · <span id="kpi-weather-hour">—</span></p><span class="source-tag">Open-Meteo · forecast API</span></article>
+     <article class="kpi"><div class="kpi-label"><span class="kpi-icon rain">◌</span><span>احتمال هطول الأمطار</span></div><strong id="kpi-rain">—<sup>%</sup></strong><p>الساعة التالية في المدينة المختارة</p><span class="source-tag">طقس متوقع · ليس رصدًا</span></article>
+     <article class="kpi"><div class="kpi-label"><span class="kpi-icon traffic">↗</span><span>توقع المرور في العينة التاريخية</span></div><strong id="kpi-traffic">—</strong><p>مركبة/ساعة · <span id="kpi-traffic-time">30 سبتمبر 2018</span></p><span class="source-tag" id="kpi-traffic-source">I‑94 · Historical replay</span></article>
+    </div>
+    <div class="split main-split">
+     <article class="panel"><div class="panel-head"><div><small class="eyebrow">LIVE METEOROLOGY</small><h3>توقعات الطقس بالساعات القادمة</h3><p>التوقع الجوي يتحدث من مزود خارجي عند فتح الصفحة.</p></div><div class="head-actions"><select id="city" aria-label="مدينة الطقس"><option value="jazan">جازان، السعودية</option><option value="minneapolis">مينيسوتا، أمريكا</option></select><button class="icon-btn" id="refresh" aria-label="تحديث بيانات الطقس">↻</button></div></div><div id="weather-status" class="info-banner">يتم الاتصال بالأرصاد الجوية...</div><div id="weather-list" class="forecast-list"><div class="loader">تحميل توقعات الأرصاد...</div></div><div class="panel-foot">المصدر <a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener noreferrer">Open-Meteo</a><span id="weather-update">—</span></div></article>
+     <article class="panel"><div class="panel-head"><div><small class="eyebrow">TRAFFIC / VERIFIED DATASET</small><h3>مرور الطريق I‑94 · يوم تاريخي</h3><p>تنبؤات محسوبة باستخدام البيانات السابقة، مقابل الواقع المسجل.</p></div><span class="badge-gray">30 SEP 2018</span></div><div class="mini-chart" id="overview-chart"><div class="loader">تحميل الرسم...</div></div><div class="legend"><span><i class="dot teal"></i>المتوقع</span><span><i class="dot violet"></i>الفعلي</span></div><div class="history-message">هذه بيانات اختبار تاريخية من الولايات المتحدة، وليست مرور جازان اليوم.</div><button class="text-link" data-go="history">استكشف يومًا آخر ←</button></article>
+    </div>
+    <div class="jazan-entry"><div><span class="tag-soft">إضافة مستقلة · بيانات اصطناعية</span><h3>محاكاة مدينة جيزان</h3><p>سيناريوهات حركة مرور تعليمية مبنية على افتراضات معلنة، مع توقع SARIMA لـ48 ساعة. ليست عدًّا فعليًا للمركبات.</p></div><button class="btn dark" data-go="jazan">افتح محاكاة جيزان ←</button></div>
+    <article class="panel map-context"><div><small class="eyebrow">LOCATION CONTEXT</small><h3>الموقع على الخريطة</h3><p id="map-region">جازان · موقع معاينة الطقس</p><p>الخريطة تحدد موقع الأرصاد فقط. لا تسحب تلقائيًا سرعات أو ازدحام Google Maps.</p><a id="map-link" href="https://www.google.com/maps/search/?api=1&query=Jazan" target="_blank" rel="noopener noreferrer">عرض الموقع في Google Maps ↗</a></div><iframe id="map-frame" loading="lazy" title="خريطة المدينة المختارة" referrerpolicy="no-referrer" aria-label="خريطة توضح موقع المدينة"></iframe></article>
+    <div class="notice"><span>i</span><p><b>التمييز ضروري:</b> الطقس المعروض توقع مستقبلي للمدينة المختارة، أما مرور الطريق I‑94 فهو إعادة اختبار لتنبؤات على بيانات فعلية من سبتمبر 2018. لا نعرض بيانات مرور مباشرة من جازان، ولا نساوي حجم المركبات بالازدحام.</p></div>
+   </section>
+   <section id="history" class="screen">
+    <div class="page-intro"><small class="eyebrow">TRAFFIC EXPLORER / HISTORICAL REPLAY</small><h1>استكشف بيانات المرور</h1><p>اختر يومًا من سبتمبر 2018، وراقب كيف تبدو التوقعات مقابل حجم المركبات المسجل ساعة بساعة على I‑94.</p></div>
+    <div class="toolbar"><label>التاريخ التاريخي <input id="traffic-date" type="date" min="2018-09-01" max="2018-09-30" value="2018-09-30"></label><button class="btn dark" id="load-date">عرض اليوم المختار ↗</button><span class="toolbar-note">I‑94 westbound · Minnesota</span></div>
+    <div class="kpis compact"><article class="kpi"><div class="kpi-label">إجمالي المركبات الفعلي لهذا اليوم</div><strong id="day-actual">—</strong><p>مركبة / يوم</p></article><article class="kpi"><div class="kpi-label">إجمالي المركبات المتوقع لهذا اليوم</div><strong id="day-forecast">—</strong><p>مركبة / يوم (مجموع التوقعات)</p></article><article class="kpi"><div class="kpi-label">متوسط الخطأ اليومي</div><strong id="day-error">—</strong><p>مركبة / ساعة</p></article></div>
+    <article class="panel chart-panel"><div class="panel-head"><div><small class="eyebrow">24-HOUR COMPARISON</small><h3>التوقع والقياس الفعلي</h3><p id="traffic-chart-note">القراءات الفعلية متاحة للمقارنة في سبتمبر 2018.</p></div></div><div id="traffic-chart" class="big-chart"></div><div class="legend"><span><i class="dot teal"></i>المتوقع</span><span><i class="dot violet"></i>الفعلي</span></div></article>
+    <article class="panel"><div class="panel-head"><div><small class="eyebrow">HOURLY RECORDS</small><h3>النتائج بالساعة</h3><p>الأرقام من ملف الاختبار؛ تستطيع اختيار أي ساعة لنقلها إلى مختبر العينات.</p></div><button id="download-day" class="btn secondary">تنزيل CSV ↓</button></div><div class="table-scroller"><table><thead><tr><th>الساعة</th><th>المتوقع</th><th>الفعلي</th><th>الخطأ المطلق</th><th></th></tr></thead><tbody id="traffic-rows"></tbody></table></div></article>
+   </section>
+   <section id="lab" class="screen">
+    <div class="page-intro"><small class="eyebrow">SANDBOX / اختبار التنبؤ</small><h1>جرّب التنبؤ بنفسك</h1><p>البيانات التاريخية معبأة مسبقًا. تستطيع اختبار ساعة محددة، أو إدخال قراءات مرور متتالية لتوقّع الساعة التي تليها.</p></div>
+    <div class="lab-grid"><article class="panel"><div class="panel-head"><div><small class="eyebrow">OPTION 01 / HISTORICAL SAMPLE</small><h3>اختبار عينة جاهزة</h3><p>اختر سجلًا حقيقيًا من المجموعة الاختبارية.</p></div></div><form id="sample-form"><label class="form-label">عينات مقترحة<select id="sample-presets"><option value="">اختر عينة...</option></select></label><label class="form-label">التاريخ والساعة<input id="sample-time" type="datetime-local" min="2018-09-01T00:00" max="2018-09-30T23:00" value="2018-09-30T17:00" required step="3600"></label><button type="submit" class="btn dark wide">اختبار العينة ↗</button></form><div id="sample-result" class="result-empty">ستظهر هنا القراءة المتوقعة والفعلية ومدى الاختلاف بينهما.</div></article>
+    <article class="panel"><div class="panel-head"><div><small class="eyebrow">OPTION 02 / YOUR OWN INPUT</small><h3>اختبار بياناتك الخاصة</h3><p>أدخل قراءات مرور متتالية بالساعة (72 قراءة على الأقل)، ثم تنبأ بالساعة التالية.</p></div></div><label class="form-label">قائمة القراءات (سطر واحد لكل ساعة)<textarea id="manual-readings" rows="6" placeholder="مثال: 1800&#10;1950&#10;2100..."></textarea></label><div class="input-actions"><button class="btn secondary" id="fill-demo">تعبئة بيانات تاريخية تلقائيًا</button><a class="upload-label" href="/static/sample_72_hours.csv" download>ملف عينة للتجربة ↓</a><label class="upload-label">رفع CSV<input id="upload-csv" type="file" accept=".csv,text/csv"></label></div><button class="btn dark wide" id="manual-run">توقع الساعة التالية ↗</button><div id="manual-result" class="result-empty">أدخل أو ارفع قراءات متتابعة لاختبار عينة جديدة.</div><p class="inline-note">لا تُستخدم قراءات الطقس في هذا الاختبار المروري؛ تظهر توقعات الطقس في القسم المستقل أعلاه. الصيغة المسموحة: رقم في كل سطر، أو ملف CSV بعمود <code>traffic_volume</code>.</p></article></div>
+    <div class="notice"><span>!</span><p>هذا المختبر لا يختلق مرورًا حقيقيًا لمدينة جديدة. التوقع لمدخلاتك تجربة بحثية تحتاج بيانات فعلية من نفس المنطقة للتحقق من الدقة.</p></div>
+   </section>
+
+   <section id="jazan" class="screen" aria-labelledby="jazan-title">
+    <div class="page-intro"><small class="eyebrow">JAZAN CITY / SYNTHETIC SIMULATION</small><h1 id="jazan-title">محاكاة حركة المرور في مدينة جيزان</h1><p>قسم تجريبي مستقل يوضح كيف يمكن تطبيق التنبؤ عند عدم توفر عدّادات مرور محلية. يشمل مدينة جيزان فقط، وليس منطقة جازان بأكملها.</p></div>
+    <div class="sim-alert" role="note"><strong>هذه أرقام محاكاة وليست مرورًا فعليًا.</strong> حجم المركبات المفترض وأنماط الحركة أمثلة هندسية للتجربة، وليست قياسات أو أعدادًا موثقة على طرق جيزان. الطقس الحقيقي منفصل عن النموذج المروري.</div>
+    <article class="panel sim-panel">
+     <div class="sim-control-row">
+      <label class="sim-control">موقع المحاكاة<select id="jazan-road" aria-label="اختر محور المحاكاة"><option>تحميل المواقع...</option></select></label>
+      <div class="sim-status" id="jazan-status" aria-live="polite">تحميل توقعات المحاكاة...</div>
+     </div>
+     <div class="sim-stats">
+      <div class="sim-stat"><span>حجم المرور المتوقع</span><strong id="jazan-volume">—</strong><small>مركبة/ساعة · محاكاة</small></div>
+      <div class="sim-stat"><span>الساعة المختارة بتوقيت السعودية</span><strong class="sim-small" id="jazan-time">—</strong><small>اختر وقتًا من الرسم</small></div>
+      <div class="sim-stat"><span>حالة الطقس المتوقعة</span><strong class="sim-small" id="jazan-weather">—</strong><small id="jazan-weather-note">من Open-Meteo، لا يدخل في توقع SARIMA</small></div>
+     </div>
+     <div class="sim-chart-head"><div><h3>توقع مرور افتراضي للساعات الـ48 القادمة</h3><p>كل نقطة تمثل تقدير عدد مركبات خلال ساعة واحدة، وليست درجة ازدحام.</p></div><span class="tag-soft">SARIMA · مثال بحثي</span></div>
+     <div class="sim-figure"><svg id="jazan-chart" viewBox="0 0 780 285" role="img" aria-label="الرسم البياني لتوقع حركة المرور الاصطناعية" preserveAspectRatio="xMidYMid meet"></svg></div>
+     <div class="sim-slider"><label for="jazan-hour">اختيار الساعة</label><input type="range" id="jazan-hour" min="0" max="47" value="0" aria-label="حدد ساعة التنبؤ"><span id="jazan-hour-count">1 / 48</span></div>
+    </article>
+    <div class="sim-explain-grid">
+     <article class="panel sim-info"><h3>كيف تُحسب الأرقام؟</h3><p>أنشأنا سجل مرور اصطناعيًا بأنماط ساعات الذروة واختلاف أيام الأسبوع، ثم استخدمنا معاملات SARIMA المقدّرة على بيانات اصطناعية لإنتاج توقع الـ48 ساعة القادمة.</p><p class="sim-muted">مستويات المرور والأرقام المرجعية افتراضات بحثية، وليست مأخوذة من عدادات مدينة جيزان.</p></article>
+     <article class="panel sim-info"><h3>هل التوقع دقيق في جيزان؟</h3><p id="jazan-metrics">ستظهر نتائج الاختبار على البيانات الاصطناعية هنا.</p><p class="sim-muted">MAE = متوسط الخطأ المطلق، وRMSE = جذر متوسط مربع الخطأ. هذه القيم تقيس أداء المحاكاة على بيانات مشابهة مصطنعة، ولا تثبت الدقة على طرق جيزان.</p></article>
+    </div>
+    <details class="sim-details"><summary>المراجع وحدود النموذج · اقرأ المزيد</summary><div><p>استُخدم تقرير UN-Habitat لتحديد نطاق مدينة جيزان وسياقها العمراني، وإرشادات FHWA كمصدر لمبدأ التغير المروري عبر الساعات والأيام. <strong>لم تُستخرج أعداد مركبات محلية من هذه المراجع.</strong> تعرض خدمة Open-Meteo طقسًا متوقعًا منفصلًا، ولا تُستخدم هذه القراءات في حساب SARIMA هنا.</p><p><a href="https://unhabitat.org/jazan-city-profile" target="_blank" rel="noopener noreferrer">UN-Habitat: Jazan City Profile ↗</a> · <a href="https://www.fhwa.dot.gov/policyinformation/tmguide/tmg_2022/traffic-data-methodologies.cfm" target="_blank" rel="noopener noreferrer">FHWA: Traffic Monitoring Guide ↗</a> · <a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener noreferrer">Open-Meteo ↗</a></p><p>السيناريو يشمل محور طريق الملك فهد وطريق الملك عبدالعزيز ونطاقًا افتراضيًا لوسط المدينة. وجود اسم طريق لا يعني تركيب عداد فيه، ولا يمكن استنتاج سرعة الطريق أو مدة الرحلة أو مستوى الازدحام من حجم المركبات وحده.</p></div></details>
+   </section>
+   <section id="sources" class="screen"><div class="page-intro"><small class="eyebrow">TRANSPARENCY / SOURCES</small><h1>من أين تأتي البيانات؟</h1><p>توثيق مباشر لمصادر الأرقام والحدود التي يجب الانتباه لها أثناء عرض مشروع التخرج.</p></div>
+    <div class="source-grid"><article class="panel source-card"><span class="source-symbol">☁</span><h3>توقعات الطقس القادمة</h3><p>يطلب الموقع درجات الحرارة واحتمالات المطر والسحب والرياح لكل ساعة من Open-Meteo للمدينة المحددة؛ لا تحفظ بيانات جوية مزيفة عند تعذر الاتصال.</p><a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener noreferrer">زيارة مصدر الطقس ↗</a></article><article class="panel source-card"><span class="source-symbol">↗</span><h3>بيانات الترافيك الأصلية</h3><p>UCI Metro Interstate Traffic Volume: قياسات حجم المركبات غرب الطريق I‑94 قرب Minneapolis–Saint Paul بالولايات المتحدة، سجلات بين عامي 2012 و2018.</p><a href="https://archive.ics.uci.edu/dataset/492/metro+interstate+traffic+volume" target="_blank" rel="noopener noreferrer">زيارة مصدر المرور ↗</a></article></div>
+    <article class="panel"><div class="panel-head"><div><small class="eyebrow">DATA PROVENANCE</small><h3>التقييم والقيود</h3></div></div><div class="facts"><div><span>عدد السجلات الخام</span><strong>48,204</strong></div><div><span>الساعات الفريدة في ملف التحليل</span><strong>40,575</strong></div><div><span>فترة اختبار هذا التطبيق</span><strong>سبتمبر 2018</strong></div><div><span>قراءات الاختبار</span><strong id="test-count">—</strong></div><div><span>متوسط الخطأ (MAE)</span><strong id="test-mae">—</strong></div><div><span>جذر متوسط مربع الخطأ (RMSE)</span><strong id="test-rmse">—</strong></div></div><p class="small-note">هذه المقاييس خاصة بإعادة اختبار بيانات I‑94 التاريخية. لا تثبت الأداء على جازان أو على بيانات مرور عام 2026. لا نستدل من حجم المرور وحده على سرعة المركبات أو تأخر الرحلات.</p></article>
+    <article class="panel sim-info" style="margin-bottom:18px"><h3>دليل سريع لاستخدام الموقع</h3><p>اختر القسم الذي تحتاجه من القائمة. كل قسم يوضح نوع بياناته في الأعلى، ويمكنك فتح الشرح المختصر عند الحاجة.</p>
+     <div class="help-grid">
+      <details><summary>لوحة المتابعة</summary><p>تعرض توقعات الطقس القادمة من Open-Meteo، ومثالًا منفصلًا لمقارنة التنبؤ بالمرور مع قياسات I‑94 التاريخية. لا تخلط بين المدينتين.</p></details>
+      <details><summary>حركة المرور التاريخية</summary><p>اختر أي يوم في سبتمبر 2018 لرؤية المتوقع والفعلي والخطأ لكل ساعة، ويمكنك تنزيل النتائج أو نقل ساعة لمختبر الاختبار.</p></details>
+      <details><summary>اختبار عينة</summary><p>إما تختار سجلًا حقيقيًا من سبتمبر 2018 للمقارنة، أو تضع 72–1000 قراءة حجم مرور بالساعة ليحسب SARIMA توقع الساعة التالية باستخدام معاملات سابقة.</p></details>
+      <details><summary>محاكاة مدينة جيزان</summary><p>اختر أحد المواقع الافتراضية داخل المدينة وحدد ساعة من 48 ساعة قادمة. النتائج محاكاة وليست عدًا فعليًا ولا قياسًا مباشرًا للازدحام.</p></details>
+     </div></article>
+    <div class="notice"><span>✓</span><p>ملاحظة للدكتور: التطبيق يوصل فكرة عرض توقعات الأرصاد مع التنبؤ بحجم المرور، مع شاشة للتحقق من التوقعات واختبار مدخلات جديدة. الدمج الفعلي بين الأرصاد وحركة المرور في جازان يتطلب بيانات مرورية محلية ومزامنة زمنية بين المصدرين.</p></div>
+   </section>
+  </main>
+  <footer class="footer"><span>© 2026 TrafficVision · Graduation Project</span><span>Historical I‑94 traffic • Live forecast weather • Transparent research demo</span></footer>
+ </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body></html>
