@@ -79,3 +79,18 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .help-grid summary{font-size:14px;color:#285c5c;cursor:pointer;font-weight:700}
 .help-grid p{font-size:13px;line-height:1.85;margin:8px 0 0}
 @media(max-width:700px){.help-grid{grid-template-columns:1fr}.page-intro h1{font-size:23px}}
+
+/* Language switch and project authors */
+.language-toggle{border:1px solid #c9ddda;background:#fff;color:#155c60;border-radius:9px;padding:8px 15px;font:600 13px 'DM Sans','IBM Plex Sans Arabic',sans-serif;cursor:pointer;white-space:nowrap}
+.language-toggle:hover,.language-toggle:focus-visible{background:#dff7f2;outline:2px solid #4dbdb0;outline-offset:2px}
+.team-credit{margin:24px 36px 0;padding:20px 24px;border:1px solid #dce8e7;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;text-align:center;color:#46656a}
+.team-credit>span{font-size:13px}.team-credit strong{font-size:17px;color:#123f48}.team-credit i{font-style:normal;color:#82aaa7;margin:0 12px}
+html[dir="ltr"] body{font-family:'DM Sans','IBM Plex Sans Arabic',sans-serif}
+html[dir="ltr"] .sidebar{right:auto;left:0}
+html[dir="ltr"] .workspace{margin:0}
+html[dir="ltr"] .nav{text-align:left}
+html[dir="ltr"] .weather-row .desc small{text-align:left!important}
+html[dir="ltr"] .hero h1{letter-spacing:-1.2px;font-size:clamp(32px,4vw,54px)}
+html[dir="ltr"] .nav small{margin-right:0;margin-left:auto}
+@media(max-width:740px){html[dir="ltr"] .sidebar{left:-280px;right:auto;transition:left .2s}html[dir="ltr"] .sidebar.open{left:0}}
+@media(max-width:600px){.team-credit{margin:18px 16px 0;gap:8px}.team-credit strong{font-size:15px}.team-credit i{margin:0 6px}.language-toggle{padding:7px 10px}.top-right{gap:8px}}
