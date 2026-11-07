@@ -1,102 +1,247 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
- <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
- <meta name="theme-color" content="#071e2c"><meta name="description" content="TrafficVision - تطبيق مشروع التخرج: طقس متوقع حي، وتنبؤ مرور قابل للاختبار من بيانات تاريخية موثقة.">
- <title>TrafficVision | Smart Traffic & Weather</title>
- <link rel="icon" href="/static/icon.svg" type="image/svg+xml">
- <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
- <link rel="stylesheet" href="/static/style.css">
- <script src="/static/app.js" defer></script>
- <script src="/static/i18n.js?v=1" defer></script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#172c28"><title>مَسار | MASAR</title>
+<link rel="icon" href="/static/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--ink:#172c28;--muted:#536963;--paper:#f2f3ed;--accent:#e0ef98;--green:#376852;--edge:#dce2d9}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Manrope,"IBM Plex Sans Arabic",system-ui,sans-serif;line-height:1.65}
+header{background:#fcfdf8;border-bottom:1px solid var(--edge)}.bar,main,footer{max-width:1160px;margin:auto;padding:0 24px}.bar{display:flex;gap:18px;align-items:center;justify-content:space-between;min-height:72px}.brand{display:flex;align-items:center;gap:10px;font-size:23px;font-weight:800;white-space:nowrap}.brand svg{width:32px;height:32px}.brand small{font-size:10px;letter-spacing:2px;color:var(--muted)}
+nav{display:flex;gap:6px;background:#edf0e8;padding:5px;border-radius:12px}button,select,input{font:inherit}button,select{cursor:pointer}button{border:0;border-radius:9px;padding:9px 15px;font-weight:700;color:inherit;background:#e6ece2}button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #8b9e40;outline-offset:3px}button[aria-current="page"]{background:var(--ink);color:white}.lang{background:transparent;border:1px solid var(--edge)}button:disabled{opacity:.5;cursor:wait}
+main{padding-top:28px;padding-bottom:36px}.hero{position:relative;overflow:hidden;background:var(--ink);color:#f6faed;border-radius:23px;padding:36px;min-height:210px;display:flex;align-items:center;isolation:isolate}.hero:after{content:"";position:absolute;inset:0;z-index:-1;background:repeating-radial-gradient(ellipse at 15% 130%,transparent 0 24px,#b0cd8b24 25px 26px,transparent 27px 45px);mask-image:linear-gradient(90deg,#000,transparent 85%)}.hero h1{font-size:clamp(32px,5vw,59px);margin:2px 0 4px;line-height:1.15;letter-spacing:-.035em}.hero p{max-width:670px;color:#d4e4d8;margin:12px 0 0}.tag{display:inline-block;border-radius:40px;padding:3px 11px;font-size:12px;font-weight:800;background:var(--accent);color:var(--ink)}.small{font-size:13px;color:var(--muted)}.row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.between{justify-content:space-between}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0}.card,.panel{background:#fff;border:1px solid var(--edge);border-radius:16px;padding:18px}.card strong{display:block;font-size:clamp(18px,3vw,30px);line-height:1.3;margin-top:5px}.card small{color:var(--muted)}.panel{margin-top:15px}.panel h2,.panel h3{margin:0}.control{display:grid;gap:5px;font-weight:700;font-size:14px}select{background:#f7f9f4;color:var(--ink);border:1px solid var(--edge);padding:9px;border-radius:8px;max-width:100%}.hours{flex:1;min-width:200px}input[type=range]{width:100%;accent-color:var(--green)}.note{background:#e9eee3;padding:12px 15px;border-radius:10px;margin-top:14px;font-size:13px}.chart{width:100%;height:auto;display:block;margin-top:12px;direction:ltr}.chart text{font-size:12px;fill:#536963}.chart [role=img]{outline:0}.upload{border:1px dashed #96ab9b;border-radius:12px;padding:20px;background:#f7f9f4;margin:12px 0}.upload input{max-width:100%}.primary{background:var(--ink);color:white}.secondary{background:var(--accent)}.error{color:#a43027}.legend{display:flex;gap:16px;color:var(--muted);font-size:13px;flex-wrap:wrap}.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-inline-end:5px;background:#417d58}.legend i.alt{background:#9e642c}.fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}.loading{opacity:.72}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.metrics p{margin:8px 0 0}.foot{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;border-top:1px solid var(--edge);padding-block:20px}.foot strong{color:var(--ink)}[hidden]{display:none!important}
+@media(max-width:660px){.bar,main,footer{padding-inline:14px}.bar{flex-wrap:wrap;padding-block:10px;gap:8px}nav{order:3;width:100%}nav button{flex:1}.hero{padding:23px}.cards{grid-template-columns:1fr 1fr}.cards .card:last-child{grid-column:1/-1}.fields{grid-template-columns:1fr}.panel,.card{padding:13px}.chart text{font-size:15px}.metrics{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
-<div class="layout">
- <aside class="sidebar" id="sidebar">
-  <a class="brand" href="#overview"><span class="logo">◈</span><span><strong>Traffic<span>Vision</span></strong><small>GRADUATION PROJECT · 2026</small></span></a>
-  <div class="nav-label">WORKSPACE / مساحة العمل</div>
-  <nav class="navigation">
-   <button class="nav active" data-screen="overview"><span class="nav-icon">◫</span> لوحة المتابعة <small>01</small></button>
-   <button class="nav" data-screen="history"><span class="nav-icon">◷</span> حركة المرور التاريخية <small>02</small></button>
-   <button class="nav" data-screen="lab"><span class="nav-icon">⟡</span> اختبار عينة <small>03</small></button>
-   <button class="nav" data-screen="jazan"><span class="nav-icon">⌁</span> محاكاة مدينة جيزان <small>04</small></button>
-   <button class="nav" data-screen="sources"><span class="nav-icon">▤</span> شرح المنصة والمصادر <small>05</small></button>
-  </nav>
-  <div class="sidebar-bottom"><div class="pulse-line"><i></i><span>Weather feed: <b id="side-weather">بانتظار الاتصال</b></span></div><p>تطبيق بحثي للتنبؤات، مع فصل واضح بين الأرصاد المباشرة وتجربة الترافيك التاريخية.</p><span class="edition">TrafficVision / Version 2.0</span></div>
- </aside>
- <div class="workspace">
-  <header class="topbar"><div class="titlebar"><button class="menu" id="menuButton" aria-label="إظهار القائمة">☰</button><div><span class="breadcrumbs">INTELLIGENT MOBILITY / JAZAN UNIVERSITY</span><strong id="headerName">لوحة المتابعة</strong></div></div><div class="top-right"><button class="language-toggle" id="language-toggle" type="button" aria-label="Switch to English" lang="en">English</button><span class="pill"><span class="pulse"></span>Academic prototype</span><span class="top-clock" id="clock">—</span></div></header>
-  <main>
-   <section id="overview" class="screen active">
-    <div class="hero"><div><span class="hero-label">SMART FORECASTING EXPERIENCE <em>●</em> DATA-DRIVEN</span><h1>رؤية أوضح للطقس<br>وحركة <span>المرور.</span></h1><p>الطقس المستقبلي، وتجربة التنبؤ بمرور I‑94 التاريخي، ومحاكاة مستقلة لمدينة جيزان — كل مصدر موضح بوضوح.</p><div class="hero-links"><button class="btn light" data-go="history">استكشف حركة المرور <span>←</span></button><button class="btn outline-light" data-go="lab">اختبر عينة بنفسك ↗</button></div></div></div>
-    <div class="section-heading"><div><small class="eyebrow">OVERVIEW / نظرة شاملة</small><h2>التنبؤات في مكان واحد</h2></div><span class="subtle">مصدران مختلفان، مع توضيح توقيت كل بيانات</span></div>
-    <div class="kpis">
-     <article class="kpi"><div class="kpi-label"><span class="kpi-icon sun">☀</span><span>توقعات الطقس القادمة</span></div><strong id="kpi-temp">—<sup>°C</sup></strong><p><span id="kpi-weather-desc">بانتظار بيانات الأرصاد</span> · <span id="kpi-weather-hour">—</span></p><span class="source-tag">Open-Meteo · forecast API</span></article>
-     <article class="kpi"><div class="kpi-label"><span class="kpi-icon rain">◌</span><span>احتمال هطول الأمطار</span></div><strong id="kpi-rain">—<sup>%</sup></strong><p>الساعة التالية في المدينة المختارة</p><span class="source-tag">طقس متوقع · ليس رصدًا</span></article>
-     <article class="kpi"><div class="kpi-label"><span class="kpi-icon traffic">↗</span><span>توقع المرور في العينة التاريخية</span></div><strong id="kpi-traffic">—</strong><p>مركبة/ساعة · <span id="kpi-traffic-time">30 سبتمبر 2018</span></p><span class="source-tag" id="kpi-traffic-source">I‑94 · Historical replay</span></article>
-    </div>
-    <div class="split main-split">
-     <article class="panel"><div class="panel-head"><div><small class="eyebrow">LIVE METEOROLOGY</small><h3>توقعات الطقس بالساعات القادمة</h3><p>التوقع الجوي يتحدث من مزود خارجي عند فتح الصفحة.</p></div><div class="head-actions"><select id="city" aria-label="مدينة الطقس"><option value="jazan">جازان، السعودية</option><option value="minneapolis">مينيسوتا، أمريكا</option></select><button class="icon-btn" id="refresh" aria-label="تحديث بيانات الطقس">↻</button></div></div><div id="weather-status" class="info-banner">يتم الاتصال بالأرصاد الجوية...</div><div id="weather-list" class="forecast-list"><div class="loader">تحميل توقعات الأرصاد...</div></div><div class="panel-foot">المصدر <a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener noreferrer">Open-Meteo</a><span id="weather-update">—</span></div></article>
-     <article class="panel"><div class="panel-head"><div><small class="eyebrow">TRAFFIC / VERIFIED DATASET</small><h3>مرور الطريق I‑94 · يوم تاريخي</h3><p>تنبؤات محسوبة باستخدام البيانات السابقة، مقابل الواقع المسجل.</p></div><span class="badge-gray">30 SEP 2018</span></div><div class="mini-chart" id="overview-chart"><div class="loader">تحميل الرسم...</div></div><div class="legend"><span><i class="dot teal"></i>المتوقع</span><span><i class="dot violet"></i>الفعلي</span></div><div class="history-message">هذه بيانات اختبار تاريخية من الولايات المتحدة، وليست مرور جازان اليوم.</div><button class="text-link" data-go="history">استكشف يومًا آخر ←</button></article>
-    </div>
-    <div class="jazan-entry"><div><span class="tag-soft">إضافة مستقلة · بيانات اصطناعية</span><h3>محاكاة مدينة جيزان</h3><p>سيناريوهات حركة مرور تعليمية مبنية على افتراضات معلنة، مع توقع SARIMA لـ48 ساعة. ليست عدًّا فعليًا للمركبات.</p></div><button class="btn dark" data-go="jazan">افتح محاكاة جيزان ←</button></div>
-    <article class="panel map-context"><div><small class="eyebrow">LOCATION CONTEXT</small><h3>الموقع على الخريطة</h3><p id="map-region">جازان · موقع معاينة الطقس</p><p>الخريطة تحدد موقع الأرصاد فقط. لا تسحب تلقائيًا سرعات أو ازدحام Google Maps.</p><a id="map-link" href="https://www.google.com/maps/search/?api=1&query=Jazan" target="_blank" rel="noopener noreferrer">عرض الموقع في Google Maps ↗</a></div><iframe id="map-frame" loading="lazy" title="خريطة المدينة المختارة" referrerpolicy="no-referrer" aria-label="خريطة توضح موقع المدينة"></iframe></article>
-    <div class="notice"><span>i</span><p><b>التمييز ضروري:</b> الطقس المعروض توقع مستقبلي للمدينة المختارة، أما مرور الطريق I‑94 فهو إعادة اختبار لتنبؤات على بيانات فعلية من سبتمبر 2018. لا نعرض بيانات مرور مباشرة من جازان، ولا نساوي حجم المركبات بالازدحام.</p></div>
-   </section>
-   <section id="history" class="screen">
-    <div class="page-intro"><small class="eyebrow">TRAFFIC EXPLORER / HISTORICAL REPLAY</small><h1>استكشف بيانات المرور</h1><p>اختر يومًا من سبتمبر 2018، وراقب كيف تبدو التوقعات مقابل حجم المركبات المسجل ساعة بساعة على I‑94.</p></div>
-    <div class="toolbar"><label>التاريخ التاريخي <input id="traffic-date" type="date" min="2018-09-01" max="2018-09-30" value="2018-09-30"></label><button class="btn dark" id="load-date">عرض اليوم المختار ↗</button><span class="toolbar-note">I‑94 westbound · Minnesota</span></div>
-    <div class="kpis compact"><article class="kpi"><div class="kpi-label">إجمالي المركبات الفعلي لهذا اليوم</div><strong id="day-actual">—</strong><p>مركبة / يوم</p></article><article class="kpi"><div class="kpi-label">إجمالي المركبات المتوقع لهذا اليوم</div><strong id="day-forecast">—</strong><p>مركبة / يوم (مجموع التوقعات)</p></article><article class="kpi"><div class="kpi-label">متوسط الخطأ اليومي</div><strong id="day-error">—</strong><p>مركبة / ساعة</p></article></div>
-    <article class="panel chart-panel"><div class="panel-head"><div><small class="eyebrow">24-HOUR COMPARISON</small><h3>التوقع والقياس الفعلي</h3><p id="traffic-chart-note">القراءات الفعلية متاحة للمقارنة في سبتمبر 2018.</p></div></div><div id="traffic-chart" class="big-chart"></div><div class="legend"><span><i class="dot teal"></i>المتوقع</span><span><i class="dot violet"></i>الفعلي</span></div></article>
-    <article class="panel"><div class="panel-head"><div><small class="eyebrow">HOURLY RECORDS</small><h3>النتائج بالساعة</h3><p>الأرقام من ملف الاختبار؛ تستطيع اختيار أي ساعة لنقلها إلى مختبر العينات.</p></div><button id="download-day" class="btn secondary">تنزيل CSV ↓</button></div><div class="table-scroller"><table><thead><tr><th>الساعة</th><th>المتوقع</th><th>الفعلي</th><th>الخطأ المطلق</th><th></th></tr></thead><tbody id="traffic-rows"></tbody></table></div></article>
-   </section>
-   <section id="lab" class="screen">
-    <div class="page-intro"><small class="eyebrow">SANDBOX / اختبار التنبؤ</small><h1>جرّب التنبؤ بنفسك</h1><p>البيانات التاريخية معبأة مسبقًا. تستطيع اختبار ساعة محددة، أو إدخال قراءات مرور متتالية لتوقّع الساعة التي تليها.</p></div>
-    <div class="lab-grid"><article class="panel"><div class="panel-head"><div><small class="eyebrow">OPTION 01 / HISTORICAL SAMPLE</small><h3>اختبار عينة جاهزة</h3><p>اختر سجلًا حقيقيًا من المجموعة الاختبارية.</p></div></div><form id="sample-form"><label class="form-label">عينات مقترحة<select id="sample-presets"><option value="">اختر عينة...</option></select></label><label class="form-label">التاريخ والساعة<input id="sample-time" type="datetime-local" min="2018-09-01T00:00" max="2018-09-30T23:00" value="2018-09-30T17:00" required step="3600"></label><button type="submit" class="btn dark wide">اختبار العينة ↗</button></form><div id="sample-result" class="result-empty">ستظهر هنا القراءة المتوقعة والفعلية ومدى الاختلاف بينهما.</div></article>
-    <article class="panel"><div class="panel-head"><div><small class="eyebrow">OPTION 02 / YOUR OWN INPUT</small><h3>اختبار بياناتك الخاصة</h3><p>أدخل قراءات مرور متتالية بالساعة (72 قراءة على الأقل)، ثم تنبأ بالساعة التالية.</p></div></div><label class="form-label">قائمة القراءات (سطر واحد لكل ساعة)<textarea id="manual-readings" rows="6" placeholder="مثال: 1800&#10;1950&#10;2100..."></textarea></label><div class="input-actions"><button class="btn secondary" id="fill-demo">تعبئة بيانات تاريخية تلقائيًا</button><a class="upload-label" href="/static/sample_72_hours.csv" download>ملف عينة للتجربة ↓</a><label class="upload-label">رفع CSV<input id="upload-csv" type="file" accept=".csv,text/csv"></label></div><button class="btn dark wide" id="manual-run">توقع الساعة التالية ↗</button><div id="manual-result" class="result-empty">أدخل أو ارفع قراءات متتابعة لاختبار عينة جديدة.</div><p class="inline-note">لا تُستخدم قراءات الطقس في هذا الاختبار المروري؛ تظهر توقعات الطقس في القسم المستقل أعلاه. الصيغة المسموحة: رقم في كل سطر، أو ملف CSV بعمود <code>traffic_volume</code>.</p></article></div>
-    <div class="notice"><span>!</span><p>هذا المختبر لا يختلق مرورًا حقيقيًا لمدينة جديدة. التوقع لمدخلاتك تجربة بحثية تحتاج بيانات فعلية من نفس المنطقة للتحقق من الدقة.</p></div>
-   </section>
-
-   <section id="jazan" class="screen" aria-labelledby="jazan-title">
-    <div class="page-intro"><small class="eyebrow">JAZAN CITY / SYNTHETIC SIMULATION</small><h1 id="jazan-title">محاكاة حركة المرور في مدينة جيزان</h1><p>قسم تجريبي مستقل يوضح كيف يمكن تطبيق التنبؤ عند عدم توفر عدّادات مرور محلية. يشمل مدينة جيزان فقط، وليس منطقة جازان بأكملها.</p></div>
-    <div class="sim-alert" role="note"><strong>هذه أرقام محاكاة وليست مرورًا فعليًا.</strong> حجم المركبات المفترض وأنماط الحركة أمثلة هندسية للتجربة، وليست قياسات أو أعدادًا موثقة على طرق جيزان. الطقس الحقيقي منفصل عن النموذج المروري.</div>
-    <article class="panel sim-panel">
-     <div class="sim-control-row">
-      <label class="sim-control">موقع المحاكاة<select id="jazan-road" aria-label="اختر محور المحاكاة"><option>تحميل المواقع...</option></select></label>
-      <div class="sim-status" id="jazan-status" aria-live="polite">تحميل توقعات المحاكاة...</div>
-     </div>
-     <div class="sim-stats">
-      <div class="sim-stat"><span>حجم المرور المتوقع</span><strong id="jazan-volume">—</strong><small>مركبة/ساعة · محاكاة</small></div>
-      <div class="sim-stat"><span>الساعة المختارة بتوقيت السعودية</span><strong class="sim-small" id="jazan-time">—</strong><small>اختر وقتًا من الرسم</small></div>
-      <div class="sim-stat"><span>حالة الطقس المتوقعة</span><strong class="sim-small" id="jazan-weather">—</strong><small id="jazan-weather-note">من Open-Meteo، لا يدخل في توقع SARIMA</small></div>
-     </div>
-     <div class="sim-chart-head"><div><h3>توقع مرور افتراضي للساعات الـ48 القادمة</h3><p>كل نقطة تمثل تقدير عدد مركبات خلال ساعة واحدة، وليست درجة ازدحام.</p></div><span class="tag-soft">SARIMA · مثال بحثي</span></div>
-     <div class="sim-figure"><svg id="jazan-chart" viewBox="0 0 780 285" role="img" aria-label="الرسم البياني لتوقع حركة المرور الاصطناعية" preserveAspectRatio="xMidYMid meet"></svg></div>
-     <div class="sim-slider"><label for="jazan-hour">اختيار الساعة</label><input type="range" id="jazan-hour" min="0" max="47" value="0" aria-label="حدد ساعة التنبؤ"><span id="jazan-hour-count">1 / 48</span></div>
-    </article>
-    <div class="sim-explain-grid">
-     <article class="panel sim-info"><h3>كيف تُحسب الأرقام؟</h3><p>أنشأنا سجل مرور اصطناعيًا بأنماط ساعات الذروة واختلاف أيام الأسبوع، ثم استخدمنا معاملات SARIMA المقدّرة على بيانات اصطناعية لإنتاج توقع الـ48 ساعة القادمة.</p><p class="sim-muted">مستويات المرور والأرقام المرجعية افتراضات بحثية، وليست مأخوذة من عدادات مدينة جيزان.</p></article>
-     <article class="panel sim-info"><h3>هل التوقع دقيق في جيزان؟</h3><p id="jazan-metrics">ستظهر نتائج الاختبار على البيانات الاصطناعية هنا.</p><p class="sim-muted">MAE = متوسط الخطأ المطلق، وRMSE = جذر متوسط مربع الخطأ. هذه القيم تقيس أداء المحاكاة على بيانات مشابهة مصطنعة، ولا تثبت الدقة على طرق جيزان.</p></article>
-    </div>
-    <details class="sim-details"><summary>المراجع وحدود النموذج · اقرأ المزيد</summary><div><p>استُخدم تقرير UN-Habitat لتحديد نطاق مدينة جيزان وسياقها العمراني، وإرشادات FHWA كمصدر لمبدأ التغير المروري عبر الساعات والأيام. <strong>لم تُستخرج أعداد مركبات محلية من هذه المراجع.</strong> تعرض خدمة Open-Meteo طقسًا متوقعًا منفصلًا، ولا تُستخدم هذه القراءات في حساب SARIMA هنا.</p><p><a href="https://unhabitat.org/jazan-city-profile" target="_blank" rel="noopener noreferrer">UN-Habitat: Jazan City Profile ↗</a> · <a href="https://www.fhwa.dot.gov/policyinformation/tmguide/tmg_2022/traffic-data-methodologies.cfm" target="_blank" rel="noopener noreferrer">FHWA: Traffic Monitoring Guide ↗</a> · <a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener noreferrer">Open-Meteo ↗</a></p><p>السيناريو يشمل محور طريق الملك فهد وطريق الملك عبدالعزيز ونطاقًا افتراضيًا لوسط المدينة. وجود اسم طريق لا يعني تركيب عداد فيه، ولا يمكن استنتاج سرعة الطريق أو مدة الرحلة أو مستوى الازدحام من حجم المركبات وحده.</p></div></details>
-   </section>
-   <section id="sources" class="screen"><div class="page-intro"><small class="eyebrow">TRANSPARENCY / SOURCES</small><h1>من أين تأتي البيانات؟</h1><p>توثيق مباشر لمصادر الأرقام والحدود التي يجب الانتباه لها أثناء عرض مشروع التخرج.</p></div>
-    <div class="source-grid"><article class="panel source-card"><span class="source-symbol">☁</span><h3>توقعات الطقس القادمة</h3><p>يطلب الموقع درجات الحرارة واحتمالات المطر والسحب والرياح لكل ساعة من Open-Meteo للمدينة المحددة؛ لا تحفظ بيانات جوية مزيفة عند تعذر الاتصال.</p><a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener noreferrer">زيارة مصدر الطقس ↗</a></article><article class="panel source-card"><span class="source-symbol">↗</span><h3>بيانات الترافيك الأصلية</h3><p>UCI Metro Interstate Traffic Volume: قياسات حجم المركبات غرب الطريق I‑94 قرب Minneapolis–Saint Paul بالولايات المتحدة، سجلات بين عامي 2012 و2018.</p><a href="https://archive.ics.uci.edu/dataset/492/metro+interstate+traffic+volume" target="_blank" rel="noopener noreferrer">زيارة مصدر المرور ↗</a></article></div>
-    <article class="panel"><div class="panel-head"><div><small class="eyebrow">DATA PROVENANCE</small><h3>التقييم والقيود</h3></div></div><div class="facts"><div><span>عدد السجلات الخام</span><strong>48,204</strong></div><div><span>الساعات الفريدة في ملف التحليل</span><strong>40,575</strong></div><div><span>فترة اختبار هذا التطبيق</span><strong>سبتمبر 2018</strong></div><div><span>قراءات الاختبار</span><strong id="test-count">—</strong></div><div><span>متوسط الخطأ (MAE)</span><strong id="test-mae">—</strong></div><div><span>جذر متوسط مربع الخطأ (RMSE)</span><strong id="test-rmse">—</strong></div></div><p class="small-note">هذه المقاييس خاصة بإعادة اختبار بيانات I‑94 التاريخية. لا تثبت الأداء على جازان أو على بيانات مرور عام 2026. لا نستدل من حجم المرور وحده على سرعة المركبات أو تأخر الرحلات.</p></article>
-    <article class="panel sim-info" style="margin-bottom:18px"><h3>دليل سريع لاستخدام الموقع</h3><p>اختر القسم الذي تحتاجه من القائمة. كل قسم يوضح نوع بياناته في الأعلى، ويمكنك فتح الشرح المختصر عند الحاجة.</p>
-     <div class="help-grid">
-      <details><summary>لوحة المتابعة</summary><p>تعرض توقعات الطقس القادمة من Open-Meteo، ومثالًا منفصلًا لمقارنة التنبؤ بالمرور مع قياسات I‑94 التاريخية. لا تخلط بين المدينتين.</p></details>
-      <details><summary>حركة المرور التاريخية</summary><p>اختر أي يوم في سبتمبر 2018 لرؤية المتوقع والفعلي والخطأ لكل ساعة، ويمكنك تنزيل النتائج أو نقل ساعة لمختبر الاختبار.</p></details>
-      <details><summary>اختبار عينة</summary><p>إما تختار سجلًا حقيقيًا من سبتمبر 2018 للمقارنة، أو تضع 72–1000 قراءة حجم مرور بالساعة ليحسب SARIMA توقع الساعة التالية باستخدام معاملات سابقة.</p></details>
-      <details><summary>محاكاة مدينة جيزان</summary><p>اختر أحد المواقع الافتراضية داخل المدينة وحدد ساعة من 48 ساعة قادمة. النتائج محاكاة وليست عدًا فعليًا ولا قياسًا مباشرًا للازدحام.</p></details>
-     </div></article>
-    <div class="notice"><span>✓</span><p>ملاحظة للدكتور: التطبيق يوصل فكرة عرض توقعات الأرصاد مع التنبؤ بحجم المرور، مع شاشة للتحقق من التوقعات واختبار مدخلات جديدة. الدمج الفعلي بين الأرصاد وحركة المرور في جازان يتطلب بيانات مرورية محلية ومزامنة زمنية بين المصدرين.</p></div>
-   </section>
-  </main>
-  <div class="team-credit"><span>تطوير الموقع</span><strong>نايف <i>·</i> إبراهيم <i>·</i> عبدالله</strong></div>
-  <footer class="footer"><span>© 2026 TrafficVision · Graduation Project</span><span>Historical I‑94 traffic • Live forecast weather • Transparent research demo</span></footer>
- </div>
+<header><div class="bar">
+<div class="brand"><svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="10" fill="#172c28"/><path d="M10 28C19 28 18 12 30 12M10 34C26 34 21 18 30 18" fill="none" stroke="#e0ef98" stroke-width="2.5" stroke-linecap="round"/></svg><span data-t="brand">مَسار</span><small>MASAR</small></div>
+<nav aria-label="Navigation"><button type="button" data-screen="jazan" data-t="sim" aria-current="page">محاكاة جيزان</button><button type="button" data-screen="lab" data-t="lab">مختبر التنبؤ</button></nav>
+<button class="lang" id="language" type="button">English</button>
+</div></header>
+<main>
+<section id="jazan">
+<div class="hero"><div><span class="tag" data-t="scenario"></span><h1 data-t="simTitle"></h1><p data-t="simIntro"></p></div></div>
+<div class="note" data-t="simulationNote"></div>
+<div class="panel row">
+<label class="control"><span data-t="road"></span><select id="road" disabled></select></label>
+<label class="control hours"><span data-t="hour"></span><input type="range" id="hour" min="0" max="47" value="0" disabled></label>
+<button id="refresh" type="button" data-t="refresh"></button>
 </div>
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
-</body></html>
+<p id="simStatus" class="small" role="status"></p>
+<div class="cards">
+<div class="card"><span data-t="traffic"></span><strong id="volume">—</strong><small data-t="unit"></small></div>
+<div class="card"><span data-t="weather"></span><strong id="weather">—</strong><small id="weatherDetail">Open-Meteo</small></div>
+<div class="card"><span data-t="selected"></span><strong id="time">—</strong><small data-t="timezone"></small></div>
+</div>
+<div class="panel"><div class="row between"><h2 data-t="next48"></h2><span class="tag">SARIMA</span></div><svg class="chart" id="jazan-chart" viewBox="0 0 850 270" role="img"></svg></div>
+<details class="panel"><summary data-t="assumptions"></summary><p class="small" data-t="assumptionText"></p><div class="row small"><a href="https://unhabitat.org/jazan-city-profile" target="_blank" rel="noopener">UN-Habitat</a><a href="https://www.fhwa.dot.gov/policyinformation/tmguide/tmg_2022/traffic-data-methodologies.cfm" target="_blank" rel="noopener">FHWA</a><a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener">Open-Meteo</a></div></details>
+</section>
+<section id="lab" hidden>
+<div class="hero"><div><span class="tag">Excel · CSV · SARIMA</span><h1 data-t="labTitle"></h1><p data-t="labIntro"></p></div></div>
+<div class="panel">
+<h2 data-t="inputTitle"></h2><p class="small" data-t="requirements"></p>
+<div class="upload"><label class="control"><span data-t="choose"></span><input id="file" type="file" accept=".xlsx,.csv"></label></div>
+<div id="fields" class="fields" hidden>
+<label class="control" id="sheetWrap"><span data-t="sheet"></span><select id="sheet"></select></label>
+<label class="control"><span data-t="timestamp"></span><select id="timestamp"></select></label>
+<label class="control"><span data-t="count"></span><select id="count"></select></label>
+</div>
+<div class="row"><button class="primary" id="analyze" type="button" disabled data-t="run"></button><button class="secondary" id="example" type="button" data-t="example"></button></div>
+<p id="labStatus" class="small" role="status" aria-live="polite"></p>
+</div>
+<div id="results" hidden>
+<div class="cards">
+<div class="card"><span data-t="next"></span><strong id="prediction"></strong><small id="predictionTime"></small></div>
+<div class="card"><span data-t="observations"></span><strong id="observations"></strong><small id="window"></small></div>
+<div class="card"><span data-t="average"></span><strong id="average"></strong><small id="peak"></small></div>
+</div>
+<div class="panel"><div class="row between"><h2 data-t="evaluation"></h2><span class="tag" id="model"></span></div><p class="small" id="split"></p>
+<div class="metrics"><div class="card"><b>SARIMA</b><p id="scores"></p></div><div class="card"><b data-t="baseline"></b><p id="baseline"></p></div></div>
+<div class="legend"><span><i></i><span data-t="actual"></span></span><span><i class="alt"></i><span data-t="predicted"></span></span></div>
+<svg id="evaluation-chart" class="chart" viewBox="0 0 850 270" role="img"></svg>
+</div>
+<div class="panel"><h2 data-t="series"></h2><p id="origin" class="small"></p><svg id="history-chart" class="chart" viewBox="0 0 850 270" role="img"></svg></div>
+</div>
+</section>
+</main>
+<footer class="foot small"><span data-t="footer"></span><span><span data-t="credits"></span> <strong data-t="names"></strong></span></footer>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const copy = {
+brand:['مَسار','Masar'],sim:['محاكاة جيزان','Jazan simulation'],lab:['مختبر التنبؤ','Forecast lab'],
+scenario:['سيناريو تعليمي · مدينة جيزان','Educational scenario · Jazan City'],
+simTitle:['كيف يتحرك الطريق؟','How does the road move?'],
+simIntro:['اختر أحد محاور جيزان واستكشف حجم المرور المحاكى وتوقعات الطقس ساعة بساعة.','Choose a Jazan route and explore simulated vehicle volumes and weather forecasts hour by hour.'],
+simulationNote:['أرقام المرور اصطناعية ومبنية على افتراضات. توقعات الطقس من Open-Meteo وتُعرض بشكل مستقل عن نموذج المرور.','Traffic volumes are synthetic and based on assumptions. Open-Meteo weather forecasts are displayed independently of the traffic model.'],
+road:['محور المحاكاة','Simulation route'],hour:['اختر ساعة من الـ48 ساعة القادمة','Choose an hour within the next 48 hours'],refresh:['تحديث','Refresh'],
+traffic:['حجم المرور المحاكى','Simulated traffic volume'],unit:['مركبة / ساعة','vehicles / hour'],weather:['توقع الطقس','Weather forecast'],selected:['الساعة المختارة','Selected hour'],timezone:['بتوقيت السعودية','Saudi Arabia time'],
+next48:['حجم المرور على مدار 48 ساعة','48-hour traffic volume'],assumptions:['الافتراضات ومصادرها','Assumptions and sources'],
+assumptionText:['تستخدم المحاكاة أنماطًا افتراضية لساعات الذروة وأيام الأسبوع. يساعد ملف مدينة جيزان في تحديد نطاق المحاكاة، وتوضح إرشادات FHWA تغير المرور عبر الساعات والأيام.','The simulation uses assumed peak-hour and weekday patterns. The Jazan City Profile informs the scope, and FHWA guidance describes hourly and daily traffic variation.'],
+labTitle:['من ملفك إلى توقّعك','From your file to your forecast'],
+labIntro:['ارفع بيانات المرور بالساعة. يفحص مَسار السلسلة، ويدرّب SARIMA على قراءاتك، ثم يعرض أداءه وتوقع الساعة التالية.','Upload hourly traffic readings. Masar checks the series, fits SARIMA to your observations, and reports its performance and next-hour forecast.'],
+inputTitle:['بيانات التحليل','Analysis data'],
+requirements:['Excel بصيغة XLSX أو CSV حتى 2 MB. ابدأ بعناوين الأعمدة، ثم أضف 168 قراءة متتالية على الأقل، مثل 2026-11-01 08:00 مع عدد المركبات. يستخدم التدريب آخر 2,016 ساعة كحد أقصى.','Upload XLSX or CSV up to 2 MB. Use column headers and at least 168 consecutive hourly readings, such as 2026-11-01 08:00 with a vehicle count. Training uses up to the latest 2,016 hours.'],
+choose:['اختر ملفًا','Choose a file'],sheet:['ورقة Excel','Excel sheet'],timestamp:['عمود التاريخ والوقت','Timestamp column'],count:['عمود عدد المركبات','Vehicle count column'],
+run:['حلّل وتنبّأ','Analyze and forecast'],example:['جرّب ببيانات المشروع','Try project data'],loading:['جاري التحميل…','Loading…'],training:['جاري تدريب النموذج وتقييمه…','Training and evaluating the model…'],ready:['جاهز للتحليل','Ready to analyze'],complete:['اكتمل التحليل','Analysis complete'],
+next:['توقع الساعة التالية','Next-hour forecast'],clipped:['قُيّد التوقع عند الصفر لأن النموذج أعطى قيمة سالبة.','Forecast limited to zero because the model returned a negative value.'],observations:['ساعات مستخدمة في النموذج','Hours used by the model'],average:['متوسط حجم المرور','Average traffic volume'],peak:['أعلى قراءة','Peak reading'],
+evaluation:['أداء التنبؤ على ساعات الاختبار','Forecast performance on held-out hours'],baseline:['نفس الساعة من اليوم السابق','Same hour on the previous day'],actual:['القراءة الفعلية','Actual'],predicted:['التوقع قبل الساعة','One-hour-ahead forecast'],
+series:['آخر القراءات بالساعة','Latest hourly observations'],project:['عينة متصلة من بيانات المشروع على I‑94 في مينيسوتا.','A contiguous sample from the project’s I‑94 Minnesota dataset.'],
+footer:['مشروع تخرج · الهندسة الصناعية · جامعة جازان','Graduation project · Industrial Engineering · Jazan University'],credits:['تطوير الموقع','Developed by'],names:['نايف · إبراهيم · عبدالله','Naif · Ibrahim · Abdullah'],
+unavailable:['غير متاح الآن','Currently unavailable'],generic:['تعذر إكمال الطلب. حاول مرة أخرى.','Could not complete the request. Try again.'],
+file_format:['اختر ملف XLSX صالحًا أو CSV بترميز UTF‑8.','Choose a valid XLSX or UTF‑8 CSV file.'],file_size:['يتجاوز الملف حد الحجم أو عدد الصفوف والأعمدة.','The file exceeds the size, row, or column limit.'],empty:['أضف صف عناوين وقراءات في عمودين على الأقل.','Include headers and readings in at least two columns.'],
+columns:['اختر عمودين مختلفين للوقت وعدد المركبات.','Select distinct timestamp and vehicle count columns.'],
+dates:['تحقق من عمود الوقت. استخدم تاريخًا ووقتًا صالحين عند بداية كل ساعة.','Check the timestamp column. Use valid dates and times on the hour.'],
+values:['عدد المركبات يجب أن يكون رقمًا بين 0 و1,000,000 دون فراغات.','Counts must be numbers between 0 and 1,000,000 with no blanks.'],
+duplicates:['بعض الساعات مكررة. جهّز قراءة واحدة لكل ساعة.','Some hours are duplicated. Provide one reading per hour.'],gaps:['توجد فجوات زمنية. اختر فترة متصلة، ساعة بساعة.','There are gaps. Select a contiguous hourly period.'],
+insufficient:['يلزم 168 ساعة متتالية على الأقل لتدريب النموذج وتقييمه.','At least 168 consecutive hours are required for training and evaluation.'],
+convergence:['لم يستقر تدريب النموذج على هذه السلسلة. جرّب فترة أطول من البيانات.','The model did not converge on this series. Try a longer period.'],
+busy:['جاري تحليل ملف آخر. حاول بعد لحظات.','Another file is being analyzed. Try again shortly.']
+};
+let language = 'ar';
+try { if(localStorage.getItem('masar-language')==='en' || (!localStorage.getItem('masar-language') && localStorage.getItem('trafficvision-language')==='en')) language='en'; } catch {}
+const t = key => (copy[key] || copy.generic)[language==='ar'?0:1];
+const number = value => new Intl.NumberFormat('en',{maximumFractionDigits:2}).format(value);
+let simulation, weather, uploaded, inspection, result, resultOrigin, status = ['',''], currentRoad = 0;
+let fileRequest = 0, runRequest = 0;
+const weatherNames = {0:['صحو','Clear'],1:['غائم جزئيًا','Partly cloudy'],2:['غائم جزئيًا','Partly cloudy'],3:['غائم','Overcast']};
+function condition(hour) {
+  if (!hour) return t('unavailable');
+  const names = weatherNames[hour.weather_code] || [hour.description, hour.weather_code>=95?'Thunderstorms':hour.weather_code>=71&&hour.weather_code<=77?'Snow':hour.weather_code>=51?'Precipitation':'Fog'];
+  return names[language==='ar'?0:1];
+}
+async function request(url, body) {
+  const response = await fetch(url,body===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const data=await response.json();
+  if (!response.ok) throw new Error(data.error || 'generic');
+  return data;
+}
+function setStatus(key, detail='', error=false) {
+  status=[key,detail,error];
+  $('labStatus').textContent=key?t(key)+(detail?' · '+detail:''):'';
+  $('labStatus').classList.toggle('error',error);
+}
+function selectOptions(element, values, chosen=0) {
+  element.replaceChildren(...values.map((label,i)=>new Option(label,String(i),false,i===chosen)));
+}
+function formatSaudi(date) {
+  return new Intl.DateTimeFormat(language==='ar'?'ar-SA-u-ca-gregory':'en-GB',{timeZone:'Asia/Riyadh',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}).format(date);
+}
+function chart(id, lines, label, times, selected=-1) {
+  const el=$(id);
+  const all=lines.flatMap(line=>line.values);
+  const max=Math.max(1,...all)*1.09, count=lines[0].values.length;
+  const x=i=>58+i*774/Math.max(1,count-1), y=v=>235-v*217/max;
+  let markup='';
+  for(let i=0;i<5;i++){const val=max*i/4;markup+='<line x1="58" x2="832" y1="'+y(val)+'" y2="'+y(val)+'" stroke="#e3ebe2"/><text x="51" y="'+(y(val)+4)+'" text-anchor="end">'+number(Math.round(val))+'</text>';}
+  for(let i=0;i<Math.min(5,count);i++){const j=Math.round(i*(count-1)/Math.max(1,Math.min(5,count)-1));markup+='<text x="'+x(j)+'" y="258" text-anchor="'+(i===0?'start':i===4?'end':'middle')+'">'+times[j]+'</text>';}
+  for(const line of lines){const points=line.values.map((v,i)=>x(i).toFixed(1)+','+y(v).toFixed(1)).join(' ');markup+='<polyline points="'+points+'" fill="none" stroke="'+line.color+'" stroke-width="2.8" stroke-linejoin="round"/>';}
+  if(selected>=0)markup+='<circle cx="'+x(selected)+'" cy="'+y(lines[0].values[selected])+'" r="5" fill="#172c28" stroke="white" stroke-width="2"/>';
+  el.innerHTML=markup;el.setAttribute('aria-label',t(label));
+}
+function renderSim() {
+  if(!simulation)return;
+  const index=Number($('hour').value), road=simulation.roads[currentRoad];
+  const date=new Date(Date.parse(simulation.forecast_start)+index*3600000);
+  const matched=weather?.hours.find(item=>Date.parse(item.time+'+03:00')===date.getTime());
+  $('volume').textContent=number(road.forecast[index]);
+  $('time').textContent=formatSaudi(date);
+  $('weather').textContent=matched?number(matched.temperature_c)+' °C':'—';
+  $('weatherDetail').textContent=condition(matched)+' · Open-Meteo';
+  const times=road.forecast.map((_,i)=>new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Riyadh',hour:'2-digit',minute:'2-digit'}).format(new Date(Date.parse(simulation.forecast_start)+i*3600000)));
+  chart('jazan-chart',[{values:road.forecast,color:'#417d58'}],'next48',times,index);
+}
+async function loadSim() {
+  $('refresh').disabled=true;$('simStatus').textContent=t('loading');
+  const [sim,wx]=await Promise.allSettled([request('/api/jazan'),request('/api/weather?city=jazan')]);
+  if(sim.status==='fulfilled')simulation=sim.value;
+  if(wx.status==='fulfilled')weather=wx.value;
+  $('simStatus').textContent=sim.status==='fulfilled'?'':t('unavailable');
+  $('refresh').disabled=false;
+  if(simulation){
+    selectOptions($('road'),simulation.roads.map(r=>r[language]),currentRoad);
+    $('road').disabled=false;$('hour').disabled=false;renderSim();
+  }
+}
+function renderResult() {
+  if(!result)return;
+  $('results').hidden=false;
+  $('prediction').textContent=number(result.forecast)+' '+t('unit');
+  $('predictionTime').textContent=result.next_time.replace('T',' ')+(result.forecast_clipped?' · '+t('clipped'):'');
+  $('observations').textContent=number(result.used)+' / '+number(result.rows);
+  $('window').textContent=result.start.slice(0,10)+' → '+result.end.slice(0,10);
+  $('average').textContent=number(result.mean);
+  $('peak').textContent=t('peak')+' · '+number(result.peak);
+  $('model').textContent=result.model;
+  $('split').textContent=language==='ar'?`التدريب: ${result.train} ساعة · الاختبار الزمني: ${result.holdout} ساعة · التقييم ساعة بخطوة`:`Training: ${result.train} h · Chronological test: ${result.holdout} h · One hour ahead`;
+  for(const [id,metrics] of [['scores',result.metrics],['baseline',result.baseline]])$(id).textContent='MAE '+number(metrics.mae)+' · RMSE '+number(metrics.rmse)+' · '+t('unit');
+  $('origin').textContent=resultOrigin==='project'?t('project'):resultOrigin;
+  const times=rows=>rows.map(r=>r.time.slice(5,16).replace('T',' '));
+  chart('history-chart',[{values:result.history.map(r=>r.volume),color:'#417d58'}],'series',times(result.history));
+  chart('evaluation-chart',[{values:result.evaluation.map(r=>r.actual),color:'#417d58'},{values:result.evaluation.map(r=>r.predicted),color:'#9e642c'}],'evaluation',times(result.evaluation));
+}
+function applyLanguage() {
+  document.documentElement.lang=language;
+  document.documentElement.dir=language==='ar'?'rtl':'ltr';
+  document.querySelectorAll('[data-t]').forEach(el=>el.textContent=t(el.dataset.t));
+  $('language').textContent=language==='ar'?'English':'العربية';
+  if(simulation){selectOptions($('road'),simulation.roads.map(r=>r[language]),currentRoad);renderSim();}
+  setStatus(...status);renderResult();
+}
+function show(section) {
+  const active=section==='lab'?'lab':'jazan';
+  for(const id of ['lab','jazan'])$(id).hidden=id!==active;
+  document.querySelectorAll('[data-screen]').forEach(el=>{if(el.dataset.screen===active)el.setAttribute('aria-current','page');else el.removeAttribute('aria-current');});
+  if(active==='lab')renderResult();
+}
+async function inspect(sheet, token) {
+  $('analyze').disabled=true;setStatus('loading');
+  try{
+    const data=await request('/api/analyze/inspect',{...uploaded,sheet});
+    if(token!==fileRequest)return;
+    inspection=data;
+    $('fields').hidden=false;$('sheetWrap').hidden=!data.sheets.length;
+    selectOptions($('sheet'),data.sheets,data.sheets.indexOf(data.sheet));
+    const time=data.columns.findIndex(c=>/date|time|تاريخ|وقت/i.test(c)), count=data.columns.findIndex(c=>/volume|vehicle|traffic|مركب|عدد/i.test(c));
+    selectOptions($('timestamp'),data.columns,Math.max(0,time));
+    selectOptions($('count'),data.columns,count>=0&&count!==Math.max(0,time)?count:Math.max(0,time)===0?1:0);
+    $('analyze').disabled=false;setStatus('ready',number(data.rows));
+  }catch(error){if(token===fileRequest){$('fields').hidden=true;setStatus(error.message,'',true);}}
+}
+$('file').addEventListener('change',()=>{
+  const token=++fileRequest;runRequest++;uploaded=null;inspection=null;result=null;
+  $('results').hidden=true;$('fields').hidden=true;$('analyze').disabled=true;$('example').disabled=false;
+  const file=$('file').files[0];if(!file){setStatus('');return;}
+  if(file.size>2000000){setStatus('file_size','',true);return;}
+  if(!/\.(csv|xlsx)$/i.test(file.name)){setStatus('file_format','',true);return;}
+  setStatus('loading');const reader=new FileReader();
+  reader.onload=()=>{if(token===fileRequest){uploaded={name:file.name,file:String(reader.result).split(',')[1]};inspect(null,token);}};
+  reader.onerror=()=>{if(token===fileRequest)setStatus('file_format','',true);};
+  reader.readAsDataURL(file);
+});
+$('sheet').addEventListener('change',()=>{runRequest++;result=null;$('results').hidden=true;$('example').disabled=false;inspect(inspection.sheets[Number($('sheet').value)],++fileRequest);});
+async function analyze(useExample) {
+  if(!useExample&&!inspection)return;
+  const token=++runRequest;
+  $('example').disabled=true;$('analyze').disabled=true;result=null;$('results').hidden=true;
+  setStatus('training');
+  try {
+    const data=await request(useExample?'/api/analyze/example':'/api/analyze',useExample?{}:{...uploaded,sheet:inspection.sheet,time:$('timestamp').value,volume:$('count').value});
+    if(token!==runRequest)return;
+    result=data;resultOrigin=useExample?'project':uploaded.name;renderResult();setStatus('complete');
+  }catch(error){if(token===runRequest)setStatus(error.message,'',true);}
+  finally {if(token===runRequest){$('analyze').disabled=!inspection;$('example').disabled=false;}}
+}
+$('analyze').onclick=()=>analyze(false);$('example').onclick=()=>analyze(true);
+$('road').onchange=()=>{currentRoad=Number($('road').value);renderSim();};
+$('hour').oninput=renderSim;$('refresh').onclick=loadSim;
+$('language').onclick=()=>{language=language==='ar'?'en':'ar';try{localStorage.setItem('masar-language',language);}catch{}applyLanguage();};
+document.querySelectorAll('[data-screen]').forEach(button=>button.onclick=()=>{location.hash=button.dataset.screen;show(button.dataset.screen);});
+window.addEventListener('hashchange',()=>show(location.hash.slice(1)));
+applyLanguage();show(location.hash.slice(1));loadSim();
+</script>
+</body>
+</html>

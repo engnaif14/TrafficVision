@@ -12,6 +12,7 @@ import numpy as np
 import pandas as pd
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 from jazan_model import current_simulation
+from masar_analysis import handle_analysis
 
 ROOT=Path(__file__).resolve().parent
 METADATA=json.loads((ROOT/'data/replay_metadata.json').read_text(encoding='utf-8'))
@@ -125,6 +126,8 @@ def application(environ,start):
    if city not in SITES:raise ValueError('المدينة غير متاحة')
    try:return respond(start,weather_for(city))
    except Exception:return respond(start,{'error':'تعذر جلب توقعات الطقس من المصدر الآن. لا يتم عرض بيانات وهمية.'},'503 Service Unavailable')
+  if method=='POST' and path in ('/api/analyze', '/api/analyze/inspect', '/api/analyze/example'):
+   return respond(start,handle_analysis(path,environ,HISTORY))
   if method=='POST' and path=='/api/manual':
    content_length=int(environ.get('CONTENT_LENGTH') or 0)
    if not 0<content_length<30000:return respond(start,{'error':'حجم الملف أو البيانات غير مقبول'},'413 Payload Too Large')
