@@ -108,9 +108,32 @@ const number = value => new Intl.NumberFormat('en',{maximumFractionDigits:2}).fo
 let simulation, weather, uploaded, inspection, result, resultOrigin, status = ['',''], currentRoad = 0;
 let fileRequest = 0, runRequest = 0;
 const weatherNames = {0:['صحو','Clear'],1:['غائم جزئيًا','Partly cloudy'],2:['غائم جزئيًا','Partly cloudy'],3:['غائم','Overcast']};
+function weatherGroup(code) {
+  if(code===45||code===48)return ['ضباب','Fog'];
+  if(code>=95)return ['عواصف رعدية','Thunderstorms'];
+  if([71,73,75,77,85,86].includes(code))return ['ثلوج','Snow'];
+  if(code>=51&&code<=57)return ['رذاذ','Drizzle'];
+  if(code>=61)return ['أمطار','Rain'];
+  return ['متقلب','Variable'];
+}
+async function fetchWeather() {
+  try { return await request('/api/weather?city=jazan'); }
+  catch {
+    const params=new URLSearchParams({
+      latitude:'16.8892', longitude:'42.5611', timezone:'Asia/Riyadh', forecast_days:'3',
+      hourly:'temperature_2m,weather_code,precipitation_probability'
+    });
+    const data=await request('https://api.open-meteo.com/v1/forecast?'+params);
+    const h=data.hourly;
+    return {hours:h.time.map((time,i)=>({
+      time,temperature_c:h.temperature_2m[i],weather_code:h.weather_code[i],
+      precipitation_probability:h.precipitation_probability[i]
+    }))};
+  }
+}
 function condition(hour) {
   if (!hour) return t('unavailable');
-  const names = weatherNames[hour.weather_code] || [hour.description, hour.weather_code>=95?'Thunderstorms':hour.weather_code>=71&&hour.weather_code<=77?'Snow':hour.weather_code>=51?'Precipitation':'Fog'];
+  const names = weatherNames[hour.weather_code] || weatherGroup(hour.weather_code);
   return names[language==='ar'?0:1];
 }
 async function request(url, body) {
@@ -149,14 +172,14 @@ function renderSim() {
   const matched=weather?.hours.find(item=>Date.parse(item.time+'+03:00')===date.getTime());
   $('volume').textContent=number(road.forecast[index]);
   $('time').textContent=formatSaudi(date);
-  $('weather').textContent=matched?number(matched.temperature_c)+' °C':'—';
-  $('weatherDetail').textContent=condition(matched)+' · Open-Meteo';
+  $('weather').textContent=Number.isFinite(matched?.temperature_c)?number(matched.temperature_c)+' °C':'—';
+  $('weatherDetail').textContent=condition(matched)+(Number.isFinite(matched?.precipitation_probability)?' · ☂ '+number(matched.precipitation_probability)+'%':'')+' · Open-Meteo';
   const times=road.forecast.map((_,i)=>new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Riyadh',hour:'2-digit',minute:'2-digit'}).format(new Date(Date.parse(simulation.forecast_start)+i*3600000)));
   chart('jazan-chart',[{values:road.forecast,color:'#417d58'}],'next48',times,index);
 }
 async function loadSim() {
   $('refresh').disabled=true;$('simStatus').textContent=t('loading');
-  const [sim,wx]=await Promise.allSettled([request('/api/jazan'),request('/api/weather?city=jazan')]);
+  const [sim,wx]=await Promise.allSettled([request('/api/jazan'),fetchWeather()]);
   if(sim.status==='fulfilled')simulation=sim.value;
   if(wx.status==='fulfilled')weather=wx.value;
   $('simStatus').textContent=sim.status==='fulfilled'?'':t('unavailable');
