@@ -138,15 +138,15 @@ def analyze(series):
         values = used.to_numpy(dtype=float)
         holdout = min(168, max(24, len(used) // 5))
         train, actual = values[:-holdout], values[-holdout:]
-        fitted = fit(train)
+        fitted = fit(np.log1p(train))
         # Each one-hour forecast uses observations available before that hour only.
-        evaluation = seasonal_model(values)
+        evaluation = seasonal_model(np.log1p(values))
         evaluation.ssm.set_conserve_memory(memory_no_filtered=True, memory_no_predicted=True,
                                            memory_no_smoothing=True)
         filtered = evaluation.filter(fitted.params)
-        predicted = np.maximum(0, filtered.forecasts[0, -holdout:])
-        full = fit(values)
-        forecast = float(full.forecast(1)[0])
+        predicted = np.maximum(0, np.expm1(filtered.forecasts[0, -holdout:]))
+        full = fit(np.log1p(values))
+        forecast = float(np.expm1(full.forecast(1)[0]))
         if not np.isfinite(predicted).all() or not np.isfinite(forecast):
             raise ValueError('convergence')
         baseline = values[-holdout-24:-24]
@@ -156,7 +156,7 @@ def analyze(series):
             'start': series.index[0].isoformat(), 'end': series.index[-1].isoformat(),
             'next_time': (series.index[-1] + pd.Timedelta(hours=1)).isoformat(),
             'mean': round(float(series.mean()), 2), 'peak': float(series.max()),
-            'forecast': round(max(0, forecast)), 'forecast_clipped': forecast < 0, 'model': 'SARIMA(1,0,0)(1,1,0,24)',
+            'forecast': round(max(0, forecast)), 'forecast_clipped': forecast < 0, 'model': 'SARIMA(1,0,0)(1,1,0,24) · log1p',
             'metrics': error_metrics(actual, predicted),
             'baseline': error_metrics(actual, baseline),
             'history': [{'time': t.isoformat(), 'volume': float(v)} for t, v in chart.items()],
