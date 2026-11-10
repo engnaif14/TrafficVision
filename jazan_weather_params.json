@@ -1,0 +1,87 @@
+{
+  "model": "SARIMA versus SARIMAX on synthetic historical traffic/weather",
+  "reference_end": "2026-10-01T13:00:00+03:00",
+  "holdout_hours": 168,
+  "test_horizon_hours": 1,
+  "weather_features": [
+    "precipitation_mm",
+    "degrees_above_37_c"
+  ],
+  "rain_effect_assumed": -16.0,
+  "heat_effect_assumed": -10.0,
+  "historical_weather_source": "synthetically generated; not observed Jazan weather",
+  "roads": {
+    "king_fahd": {
+      "baseline": {
+        "params": [
+          0.7347389020100537,
+          -0.49067768371315484,
+          3215.8200940792585
+        ],
+        "mae": 45.8,
+        "rmse": 56.93,
+        "fit_converged": true
+      },
+      "weather_aware": {
+        "params": [
+          -20.021629059292035,
+          -11.572246437392426,
+          0.7413247973175255,
+          -0.48086081568434436,
+          3076.031569723033
+        ],
+        "mae": 45.3,
+        "rmse": 56.65,
+        "fit_converged": true
+      }
+    },
+    "king_abdulaziz": {
+      "baseline": {
+        "params": [
+          0.7136179744329454,
+          -0.48627752947789643,
+          2313.879616656712
+        ],
+        "mae": 37.83,
+        "rmse": 48.12,
+        "fit_converged": true
+      },
+      "weather_aware": {
+        "params": [
+          -18.41761892482539,
+          -8.771527948709265,
+          0.7206489689281225,
+          -0.4810754193903214,
+          2208.579477510356
+        ],
+        "mae": 37.96,
+        "rmse": 48.17,
+        "fit_converged": true
+      }
+    },
+    "city_centre": {
+      "baseline": {
+        "params": [
+          0.6961727717013989,
+          -0.48334323416008096,
+          1729.5231248558516
+        ],
+        "mae": 35.71,
+        "rmse": 45.06,
+        "fit_converged": true
+      },
+      "weather_aware": {
+        "params": [
+          -11.624077967785778,
+          -8.341269771887202,
+          0.7038348246893134,
+          -0.485189813038595,
+          1677.5372027077005
+        ],
+        "mae": 35.41,
+        "rmse": 44.62,
+        "fit_converged": true
+      }
+    }
+  }
+}

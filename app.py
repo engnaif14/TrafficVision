@@ -41,9 +41,10 @@ def weather_description(c):
  return 'متقلب'
 def weather_for(city):
  if city not in SITES:raise ValueError('الموقع غير معروف')
+ place=SITES[city]
  with LOCK:
   cached=WEATHER_CACHE.get(city)
-  if cached and time.time()-cached[0]<900:return cached[1]
+  if cached and time.time()-cached[0]<900 and cached[1]['hours'][0]['time']==(datetime.now(ZoneInfo(place['timezone'])).replace(minute=0,second=0,microsecond=0)+timedelta(hours=1)).strftime('%Y-%m-%dT%H:00'):return cached[1]
  place=SITES[city]
  params={'latitude':place['lat'],'longitude':place['lon'],'timezone':place['timezone'],'forecast_days':3,'hourly':'temperature_2m,apparent_temperature,precipitation_probability,precipitation,cloud_cover,weather_code,relative_humidity_2m,wind_speed_10m'}
  req=Request('https://api.open-meteo.com/v1/forecast?'+urlencode(params),headers={'User-Agent':'TrafficVision Academic Demo/2.0','Accept':'application/json'})
@@ -57,7 +58,7 @@ def weather_for(city):
   code=int(h['weather_code'][i] or 0)
   rows.append({'time':t,'temperature_c':h['temperature_2m'][i],'feels_like_c':h['apparent_temperature'][i],'precipitation_mm':h['precipitation'][i],'precipitation_probability':h['precipitation_probability'][i],'cloud_cover':h['cloud_cover'][i],'humidity':h['relative_humidity_2m'][i],'wind_kmh':h['wind_speed_10m'][i],'weather_code':code,'description':weather_description(code)})
   if len(rows)==48:break
- if not rows:raise RuntimeError('لم يتم توفير توقعات الطقس القادمة')
+ if len(rows)<48:raise RuntimeError('توقعات الطقس غير مكتملة: يلزم 48 ساعة')
  result={'city':city,'location':place,'source':'Open-Meteo forecast API','updated_at':datetime.now(ZoneInfo(place['timezone'])).isoformat(timespec='seconds'),'hours':rows,'note':'توقعات جوية لساعات مستقبلية وليست قياسات أرصاد مرصودة'}
  with LOCK:WEATHER_CACHE[city]=(time.time(),result)
  return result
@@ -110,7 +111,24 @@ def application(environ,start):
   if method=='GET' and path=='/jazan_city_simulation.html':
    # Link to the integrated city-specific section, not a stale exported snapshot.
    start('302 Found',[('Location','/#jazan'),('Content-Length','0'),('Cache-Control','no-store')]);return [b'']
-  if method=='GET' and path=='/api/jazan':return respond(start,current_simulation())
+  if method=='GET' and path=='/api/jazan':
+   now=datetime.now(ZoneInfo('Asia/Riyadh'))
+   try:wx=weather_for('jazan')
+   except Exception:wx=None
+   return respond(start,current_simulation(now=now,weather_payload=wx))
+  if method=='POST' and path=='/api/jazan':
+   length=int(environ.get('CONTENT_LENGTH') or 0)
+   if not 0<length<=20000:return respond(start,{'error':'Invalid weather payload'},'400 Bad Request')
+   wx=json.loads(environ['wsgi.input'].read(length))
+   rows=wx.get('hours') if isinstance(wx,dict) else None
+   if not isinstance(rows,list) or len(rows)!=48 or any(
+    not isinstance(r,dict) or not isinstance(r.get('time'),str)
+    or not isinstance(r.get('temperature_c'),(int,float)) or not -60<=r['temperature_c']<=65
+    or not isinstance(r.get('precipitation_mm'),(int,float)) or not 0<=r['precipitation_mm']<=300
+    for r in rows):
+    return respond(start,{'error':'Invalid weather payload'},'400 Bad Request')
+   clean={'hours':[{k:r[k] for k in ('time','temperature_c','precipitation_mm')} for r in rows]}
+   return respond(start,current_simulation(weather_payload=clean))
   if method=='GET' and path=='/api/health':return respond(start,{'ok':True,'historical_replay_rows':len(REPLAY),'weather_provider':'Open-Meteo','jazan_simulation':'synthetic_data_only','version':'3.0'})
   if method=='GET' and path=='/api/about':return respond(start,{'data':{k:v for k,v in METADATA.items() if k!='params'},'locations':SITES})
   if method=='GET' and path=='/api/traffic':
