@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#172c28"><title>مختبر التنبؤ | مَسار | MASAR</title>
+<link rel="icon" href="/masar-mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--ink:#172c28;--muted:#536963;--paper:#f2f3ed;--accent:#e0ef98;--green:#376852;--edge:#dce2d9}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:Manrope,"IBM Plex Sans Arabic",system-ui,sans-serif;line-height:1.65}
+header{background:#fcfdf8;border-bottom:1px solid var(--edge)}.bar,main,footer{max-width:1160px;margin:auto;padding:0 24px}.bar{display:flex;gap:18px;align-items:center;justify-content:space-between;min-height:72px}.brand{display:flex;align-items:center;gap:10px;font-size:23px;font-weight:800;white-space:nowrap}.brand svg{width:32px;height:32px}.brand small{font-size:10px;letter-spacing:2px;color:var(--muted)}
+nav{display:flex;gap:6px;background:#edf0e8;padding:5px;border-radius:12px}button,select,input{font:inherit}button,select{cursor:pointer}button{border:0;border-radius:9px;padding:9px 15px;font-weight:700;color:inherit;background:#e6ece2}button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid #8b9e40;outline-offset:3px}button[aria-current="page"]{background:var(--ink);color:white}.lang{background:transparent;border:1px solid var(--edge)}button:disabled{opacity:.5;cursor:wait}
+main{padding-top:28px;padding-bottom:36px}.hero{position:relative;overflow:hidden;background:var(--ink);color:#f6faed;border-radius:23px;padding:36px;min-height:210px;display:flex;align-items:center;isolation:isolate}.hero:after{content:"";position:absolute;inset:0;z-index:-1;background:repeating-radial-gradient(ellipse at 15% 130%,transparent 0 24px,#b0cd8b24 25px 26px,transparent 27px 45px);mask-image:linear-gradient(90deg,#000,transparent 85%)}.hero h1{font-size:clamp(32px,5vw,59px);margin:2px 0 4px;line-height:1.15;letter-spacing:-.035em}.hero p{max-width:670px;color:#d4e4d8;margin:12px 0 0}.tag{display:inline-block;border-radius:40px;padding:3px 11px;font-size:12px;font-weight:800;background:var(--accent);color:var(--ink)}.small{font-size:13px;color:var(--muted)}.row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.between{justify-content:space-between}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0}.card,.panel{background:#fff;border:1px solid var(--edge);border-radius:16px;padding:18px}.card strong{display:block;font-size:clamp(18px,3vw,30px);line-height:1.3;margin-top:5px}.card small{color:var(--muted)}.panel{margin-top:15px}.panel h2,.panel h3{margin:0}.control{display:grid;gap:5px;font-weight:700;font-size:14px}select{background:#f7f9f4;color:var(--ink);border:1px solid var(--edge);padding:9px;border-radius:8px;max-width:100%}.hours{flex:1;min-width:200px}input[type=range]{width:100%;accent-color:var(--green)}.note{background:#e9eee3;padding:12px 15px;border-radius:10px;margin-top:14px;font-size:13px}.chart{width:100%;height:auto;display:block;margin-top:12px;direction:ltr}.chart text{font-size:12px;fill:#536963}.chart [role=img]{outline:0}.upload{border:1px dashed #96ab9b;border-radius:12px;padding:20px;background:#f7f9f4;margin:12px 0}.upload input{max-width:100%}.primary{background:var(--ink);color:white}.secondary{background:var(--accent)}.error{color:#a43027}.legend{display:flex;gap:16px;color:var(--muted);font-size:13px;flex-wrap:wrap}.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-inline-end:5px;background:#417d58}.legend i.alt{background:#9e642c}.fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:14px 0}.loading{opacity:.72}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.metrics p{margin:8px 0 0}.foot{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;border-top:1px solid var(--edge);padding-block:20px}.foot strong{color:var(--ink)}[hidden]{display:none!important}
+@media(max-width:660px){.bar,main,footer{padding-inline:14px}.bar{flex-wrap:wrap;padding-block:10px;gap:8px}nav{order:3;width:100%}nav button{flex:1}.hero{padding:23px}.cards{grid-template-columns:1fr 1fr}.cards .card:last-child{grid-column:1/-1}.fields{grid-template-columns:1fr}.panel,.card{padding:13px}.chart text{font-size:15px}.metrics{grid-template-columns:1fr}}
+
+/* MASAR_WEATHER_INTEGRATION_V4 — limited supplementary styles */
+.masar-weather-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:14px;margin-top:16px}
+.masar-weather-grid .panel{min-width:0;margin-top:0}
+.masar-weather-grid .chart{min-height:180px;max-height:260px}
+.masar-weather-status{font-size:13px;color:#376852;margin:10px 0 6px}
+.masar-weather-delta{font-size:15px;font-weight:700;color:#172c28;margin:6px 0 12px}
+.masar-panel-title{display:block;font-size:16px}
+.masar-metric{margin-top:12px}.masar-metric>b{display:block;margin-bottom:6px}.masar-metric small{color:#536963;font-weight:400}
+.masar-metric-row{display:grid;grid-template-columns:63px minmax(0,1fr) 54px;align-items:center;gap:7px;margin:6px 0;font-size:12px}
+.masar-metric-row strong{font-size:12px;text-align:end}.masar-track{height:8px;background:#e8efea;border-radius:8px;overflow:hidden}.masar-track>div{height:100%;border-radius:8px}
+.masar-weather-grid .small{line-height:1.7}
+@media(max-width:760px){.masar-weather-grid{grid-template-columns:1fr}.masar-weather-grid .chart{min-height:160px}}
+
+.brand{text-decoration:none;color:inherit}.home-link{display:inline-flex;align-items:center;padding:9px 15px;color:inherit;text-decoration:none;font-weight:700}header{background:#102e2a;color:#f4f8f4}nav{color:#16322b}.brand small{color:#d5f29a}.lang{color:#fff}@media(max-width:600px){.bar{gap:8px;flex-wrap:wrap;padding-block:10px}.brand{font-size:20px}nav{order:3;width:100%;justify-content:center}.hero{padding:22px}}
+</style>
+</head>
+<body>
+<header><div class="bar">
+<a class="brand" href="/"><img src="/masar-mark.svg" width="40" height="40" alt=""><span data-t="brand">مسار</span><small>MASAR</small></a>
+<nav aria-label="Navigation"><a class="home-link" href="/" data-t="sim">محاكاة جيزان</a><button type="button" data-screen="lab" data-t="lab" aria-current="page">مختبر التنبؤ</button></nav>
+<button class="lang" id="language" type="button">English</button>
+</div></header>
+<main>
+<section id="lab">
+<div class="hero"><div><span class="tag">Excel · CSV · SARIMA</span><h1 data-t="labTitle"></h1><p data-t="labIntro"></p></div></div>
+<div class="panel">
+<h2 data-t="inputTitle"></h2><p class="small" data-t="requirements"></p>
+<div class="upload"><label class="control"><span data-t="choose"></span><input id="file" type="file" accept=".xlsx,.csv"></label></div>
+<div id="fields" class="fields" hidden>
+<label class="control" id="sheetWrap"><span data-t="sheet"></span><select id="sheet"></select></label>
+<label class="control"><span data-t="timestamp"></span><select id="timestamp"></select></label>
+<label class="control"><span data-t="count"></span><select id="count"></select></label>
+</div>
+<div class="row"><button class="primary" id="analyze" type="button" disabled data-t="run"></button><button class="secondary" id="example" type="button" data-t="example"></button></div>
+<p id="labStatus" class="small" role="status" aria-live="polite"></p>
+</div>
+<div id="results" hidden>
+<div class="cards">
+<div class="card"><span data-t="next"></span><strong id="prediction"></strong><small id="predictionTime"></small></div>
+<div class="card"><span data-t="observations"></span><strong id="observations"></strong><small id="window"></small></div>
+<div class="card"><span data-t="average"></span><strong id="average"></strong><small id="peak"></small></div>
+</div>
+<div class="panel"><div class="row between"><h2 data-t="evaluation"></h2><span class="tag" id="model"></span></div><p class="small" id="split"></p>
+<div class="metrics"><div class="card"><b>SARIMA</b><p id="scores"></p></div><div class="card"><b data-t="baseline"></b><p id="baseline"></p></div></div>
+<div class="legend"><span><i></i><span data-t="actual"></span></span><span><i class="alt"></i><span data-t="predicted"></span></span></div>
+<svg id="evaluation-chart" class="chart" viewBox="0 0 850 270" role="img"></svg>
+</div>
+<div class="panel"><h2 data-t="series"></h2><p id="origin" class="small"></p><svg id="history-chart" class="chart" viewBox="0 0 850 270" role="img"></svg></div>
+</div>
+</section>
+</main>
+<footer class="foot small"><span data-t="footer"></span><span><span data-t="credits"></span> <strong data-t="names"></strong></span></footer>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const copy = {
+brand:['مَسار','Masar'],sim:['محاكاة جيزان','Jazan simulation'],lab:['مختبر التنبؤ','Forecast lab'],
+scenario:['سيناريو تعليمي · مدينة جيزان','Educational scenario · Jazan City'],
+simTitle:['كيف يتحرك الطريق؟','How does the road move?'],
+simIntro:['اختر أحد محاور جيزان واستكشف حجم المرور المحاكى وتوقعات الطقس ساعة بساعة.','Choose a Jazan route and explore simulated vehicle volumes and weather forecasts hour by hour.'],
+simulationNote:['أرقام المرور اصطناعية ومبنية على افتراضات. توقعات الطقس من Open-Meteo تدخل تلقائيًا في SARIMAX عند توفرها، مع مقارنة SARIMA دون طقس.','Traffic volumes are synthetic and based on assumptions. Open-Meteo forecast weather enters SARIMAX automatically, compared against a weather-free SARIMA baseline.'],
+road:['محور المحاكاة','Simulation route'],hour:['اختر ساعة من الـ48 ساعة القادمة','Choose an hour within the next 48 hours'],refresh:['تحديث','Refresh'],
+traffic:['حجم المرور المحاكى','Simulated traffic volume'],unit:['مركبة / ساعة','vehicles / hour'],weather:['توقع الطقس','Weather forecast'],selected:['الساعة المختارة','Selected hour'],timezone:['بتوقيت السعودية','Saudi Arabia time'],
+next48:['حجم المرور على مدار 48 ساعة','48-hour traffic volume'],assumptions:['الافتراضات ومصادرها','Assumptions and sources'],
+assumptionText:['تستخدم المحاكاة أنماطًا افتراضية لساعات الذروة وأيام الأسبوع. يساعد ملف مدينة جيزان في تحديد نطاق المحاكاة، وتوضح إرشادات FHWA تغير المرور عبر الساعات والأيام.','The simulation uses assumed peak-hour and weekday patterns. The Jazan City Profile informs the scope, and FHWA guidance describes hourly and daily traffic variation.'],
+labTitle:['من ملفك إلى توقّعك','From your file to your forecast'],
+labIntro:['ارفع بيانات المرور بالساعة. يفحص مَسار السلسلة، ويدرّب SARIMA على قراءاتك، ثم يعرض أداءه وتوقع الساعة التالية.','Upload hourly traffic readings. Masar checks the series, fits SARIMA to your observations, and reports its performance and next-hour forecast.'],
+inputTitle:['بيانات التحليل','Analysis data'],
+requirements:['Excel بصيغة XLSX أو CSV حتى 2 MB. ابدأ بعناوين الأعمدة، ثم أضف 168 قراءة متتالية على الأقل، مثل 2026-11-01 08:00 مع عدد المركبات. يستخدم التدريب آخر 2,016 ساعة كحد أقصى.','Upload XLSX or CSV up to 2 MB. Use column headers and at least 168 consecutive hourly readings, such as 2026-11-01 08:00 with a vehicle count. Training uses up to the latest 2,016 hours.'],
+choose:['اختر ملفًا','Choose a file'],sheet:['ورقة Excel','Excel sheet'],timestamp:['عمود التاريخ والوقت','Timestamp column'],count:['عمود عدد المركبات','Vehicle count column'],
+run:['حلّل وتنبّأ','Analyze and forecast'],example:['جرّب ببيانات المشروع','Try project data'],loading:['جاري التحميل…','Loading…'],training:['جاري تدريب النموذج وتقييمه…','Training and evaluating the model…'],ready:['جاهز للتحليل','Ready to analyze'],complete:['اكتمل التحليل','Analysis complete'],
+next:['توقع الساعة التالية','Next-hour forecast'],clipped:['قُيّد التوقع عند الصفر لأن النموذج أعطى قيمة سالبة.','Forecast limited to zero because the model returned a negative value.'],observations:['ساعات مستخدمة في النموذج','Hours used by the model'],average:['متوسط حجم المرور','Average traffic volume'],peak:['أعلى قراءة','Peak reading'],
+evaluation:['أداء التنبؤ على ساعات الاختبار','Forecast performance on held-out hours'],baseline:['نفس الساعة من اليوم السابق','Same hour on the previous day'],actual:['القراءة الفعلية','Actual'],predicted:['التوقع قبل الساعة','One-hour-ahead forecast'],
+series:['آخر القراءات بالساعة','Latest hourly observations'],project:['عينة متصلة من بيانات المشروع على I‑94 في مينيسوتا.','A contiguous sample from the project’s I‑94 Minnesota dataset.'],
+footer:['مشروع تخرج · الهندسة الصناعية · جامعة جازان','Graduation project · Industrial Engineering · Jazan University'],credits:['تطوير الموقع','Developed by'],names:['نايف · إبراهيم · عبدالله','Naif · Ibrahim · Abdullah'],
+unavailable:['غير متاح الآن','Currently unavailable'],generic:['تعذر إكمال الطلب. حاول مرة أخرى.','Could not complete the request. Try again.'],
+file_format:['اختر ملف XLSX صالحًا أو CSV بترميز UTF‑8.','Choose a valid XLSX or UTF‑8 CSV file.'],file_size:['يتجاوز الملف حد الحجم أو عدد الصفوف والأعمدة.','The file exceeds the size, row, or column limit.'],empty:['أضف صف عناوين وقراءات في عمودين على الأقل.','Include headers and readings in at least two columns.'],
+columns:['اختر عمودين مختلفين للوقت وعدد المركبات.','Select distinct timestamp and vehicle count columns.'],
+dates:['تحقق من عمود الوقت. استخدم تاريخًا ووقتًا صالحين عند بداية كل ساعة.','Check the timestamp column. Use valid dates and times on the hour.'],
+values:['عدد المركبات يجب أن يكون رقمًا بين 0 و1,000,000 دون فراغات.','Counts must be numbers between 0 and 1,000,000 with no blanks.'],
+duplicates:['بعض الساعات مكررة. جهّز قراءة واحدة لكل ساعة.','Some hours are duplicated. Provide one reading per hour.'],gaps:['توجد فجوات زمنية. اختر فترة متصلة، ساعة بساعة.','There are gaps. Select a contiguous hourly period.'],
+insufficient:['يلزم 168 ساعة متتالية على الأقل لتدريب النموذج وتقييمه.','At least 168 consecutive hours are required for training and evaluation.'],
+convergence:['لم يستقر تدريب النموذج على هذه السلسلة. جرّب فترة أطول من البيانات.','The model did not converge on this series. Try a longer period.'],
+busy:['جاري تحليل ملف آخر. حاول بعد لحظات.','Another file is being analyzed. Try again shortly.']
+};
+let language = 'ar';
+try { if(localStorage.getItem('masar-language')==='en' || (!localStorage.getItem('masar-language') && localStorage.getItem('trafficvision-language')==='en')) language='en'; } catch {}
+const t = key => (copy[key] || copy.generic)[language==='ar'?0:1];
+const number = value => new Intl.NumberFormat('en',{maximumFractionDigits:2}).format(value);
+let simulation, weather, uploaded, inspection, result, resultOrigin, status = ['',''], currentRoad = 0;
+let fileRequest = 0, runRequest = 0;
+const weatherNames = {0:['صحو','Clear'],1:['غائم جزئيًا','Partly cloudy'],2:['غائم جزئيًا','Partly cloudy'],3:['غائم','Overcast']};
+function weatherGroup(code) {
+  if(code===45||code===48)return ['ضباب','Fog'];
+  if(code>=95)return ['عواصف رعدية','Thunderstorms'];
+  if([71,73,75,77,85,86].includes(code))return ['ثلوج','Snow'];
+  if(code>=51&&code<=57)return ['رذاذ','Drizzle'];
+  if(code>=61)return ['أمطار','Rain'];
+  return ['متقلب','Variable'];
+}
+async function fetchWeather() {
+  try { return await request('/api/weather?city=jazan'); }
+  catch {
+    const params=new URLSearchParams({
+      latitude:'16.8892', longitude:'42.5611', timezone:'Asia/Riyadh', forecast_days:'3',
+      hourly:'temperature_2m,weather_code,precipitation_probability,precipitation'
+    });
+    const data=await request('https://api.open-meteo.com/v1/forecast?'+params);
+    const h=data.hourly;
+    return {hours:h.time.map((time,i)=>({
+      time,temperature_c:h.temperature_2m[i],weather_code:h.weather_code[i],
+      precipitation_probability:h.precipitation_probability[i],precipitation_mm:h.precipitation[i]
+    }))};
+  }
+}
+function condition(hour) {
+  if (!hour) return t('unavailable');
+  const names = weatherNames[hour.weather_code] || weatherGroup(hour.weather_code);
+  return names[language==='ar'?0:1];
+}
+async function request(url, body) {
+  const response = await fetch(url,body===undefined?{}:{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const data=await response.json();
+  if (!response.ok) throw new Error(data.error || 'generic');
+  return data;
+}
+function setStatus(key, detail='', error=false) {
+  status=[key,detail,error];
+  $('labStatus').textContent=key?t(key)+(detail?' · '+detail:''):'';
+  $('labStatus').classList.toggle('error',error);
+}
+function selectOptions(element, values, chosen=0) {
+  element.replaceChildren(...values.map((label,i)=>new Option(label,String(i),false,i===chosen)));
+}
+function formatSaudi(date) {
+  return new Intl.DateTimeFormat(language==='ar'?'ar-SA-u-ca-gregory':'en-GB',{timeZone:'Asia/Riyadh',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}).format(date);
+}
+function chart(id, lines, label, times, selected=-1) {
+  const el=$(id);
+  const all=lines.flatMap(line=>line.values);
+  const max=Math.max(1,...all)*1.09, count=lines[0].values.length;
+  const x=i=>58+i*774/Math.max(1,count-1), y=v=>235-v*217/max;
+  let markup='';
+  for(let i=0;i<5;i++){const val=max*i/4;markup+='<line x1="58" x2="832" y1="'+y(val)+'" y2="'+y(val)+'" stroke="#e3ebe2"/><text x="51" y="'+(y(val)+4)+'" text-anchor="end">'+number(Math.round(val))+'</text>';}
+  for(let i=0;i<Math.min(5,count);i++){const j=Math.round(i*(count-1)/Math.max(1,Math.min(5,count)-1));markup+='<text x="'+x(j)+'" y="258" text-anchor="'+(i===0?'start':i===4?'end':'middle')+'">'+times[j]+'</text>';}
+  for(const line of lines){const points=line.values.map((v,i)=>x(i).toFixed(1)+','+y(v).toFixed(1)).join(' ');markup+='<polyline points="'+points+'" fill="none" stroke="'+line.color+'" stroke-width="2.8" stroke-linejoin="round"/>';}
+  if(selected>=0)markup+='<circle cx="'+x(selected)+'" cy="'+y(lines[0].values[selected])+'" r="5" fill="#172c28" stroke="white" stroke-width="2"/>';
+  el.innerHTML=markup;el.setAttribute('aria-label',t(label));
+}
+
+// MASAR_WEATHER_INTEGRATION_V4 — complementary weather and model evaluation
+function masarWeatherPanel(road, selected){
+ const root=document.getElementById('masar-weather-addon');
+ if(!root || !simulation) return;
+ const labels=language==='ar'?{
+    status:'ربط الطقس',online:'Open-Meteo يدخل في SARIMAX',offline:'الطقس غير متاح؛ عرض SARIMA فقط',
+    change:'الفرق عن SARIMA',none:'غير متاح',rain:'أمطار (مم/ساعة)',temperature:'حرارة (°م)',
+    accuracy:'أداء على بيانات اصطناعية محجوبة',scope:'MAE وRMSE لا يقيسان الدقة على طرق جيزان الفعلية.',
+    baseline:'دون طقس · SARIMA',coupled:'مع الطقس · SARIMAX'
+ }:{
+    status:'Weather connection',online:'Open-Meteo feeds SARIMAX',offline:'Weather unavailable; SARIMA only',
+    change:'Difference from SARIMA',none:'Unavailable',rain:'Rain (mm/h)',temperature:'Temperature (°C)',
+    accuracy:'Evaluation on held-out synthetic data',scope:'MAE and RMSE do not validate actual Jazan roads.',
+    baseline:'Without weather · SARIMA',coupled:'With weather · SARIMAX'
+ };
+ const linked=Boolean(simulation.traffic_weather_combined);
+ const wx=simulation.weather_hours || [];
+ document.getElementById('masar-weather-mode').textContent=labels.status+': '+(linked?labels.online:labels.offline);
+ const delta=linked&&road.baseline_forecast?road.forecast[selected]-road.baseline_forecast[selected]:null;
+ document.getElementById('masar-weather-delta').textContent=labels.change+': '+(delta===null?labels.none:(delta>0?'+':'')+number(delta)+' '+(language==='ar'?'مركبة/ساعة':'veh/h'));
+ const metrics=document.getElementById('masar-weather-metrics');
+ if(road.evaluation){
+  const a=road.evaluation.sarima,b=road.evaluation.sarimax;
+  const item=(key,title)=>{
+   const max=Math.max(.01,a[key],b[key])*1.1;
+   const bar=(label,val,color)=>`<div class="masar-metric-row"><span>${label}</span><div class="masar-track"><div style="width:${Math.min(100,100*val/max)}%;background:${color}"></div></div><strong>${Number(val).toLocaleString('en-US',{maximumFractionDigits:1})}</strong></div>`;
+   return `<div class="masar-metric"><b>${title} <small>${language==='ar'?'مركبة/ساعة':'veh/h'}</small></b>${bar('SARIMA',a[key],'#95a2a1')}${bar('SARIMAX',b[key],'#427f62')}</div>`;
+  };
+  metrics.innerHTML=`<b class="masar-panel-title">${labels.accuracy}</b>${item('mae','MAE')}${item('rmse','RMSE')}<p class="small">${labels.scope}</p>`;
+ }else metrics.textContent=labels.none;
+ const svg=document.getElementById('masar-weather-chart');
+ if(!linked || wx.length!==48){svg.innerHTML=`<text x="20" y="110" fill="#647981" font-size="15">${labels.offline}</text>`;return;}
+ const temp=wx.map(x=>Number(x.temperature_c)),rain=wx.map(x=>Number(x.precipitation_mm)||0);
+ const min=Math.min(...temp)-2,max=Math.max(...temp)+2,rMax=Math.max(1,...rain);
+ const W=720,H=220,L=44,R=24,T=20,B=43,x=i=>L+i*(W-L-R)/47;
+ const y=t=>T+(max-t)/(max-min)*(H-B-T-26);
+ let markup='';
+ for(let k=0;k<=2;k++){
+  const t=min+(max-min)*k/2,yy=y(t);
+  markup+=`<line x1="${L}" x2="${W-R}" y1="${yy}" y2="${yy}" stroke="#e1e8e2"/><text x="${L-7}" y="${yy+3}" text-anchor="end" font-size="11" fill="#536963">${Math.round(t)}°</text>`;
+ }
+ for(let i=0;i<48;i++){
+  if(rain[i]>0){const bh=rain[i]/rMax*32;markup+=`<rect x="${x(i)-3}" y="${H-B-bh}" width="6" height="${bh}" rx="2" fill="#6d96c3"/>`;}
+ }
+ const path=temp.map((t,i)=>(i?'L':'M')+x(i).toFixed(1)+','+y(t).toFixed(1)).join(' ');
+ markup+=`<path d="${path}" fill="none" stroke="#427f62" stroke-width="3" stroke-linejoin="round"/>`;
+ for(let i=0;i<48;i+=9)markup+=`<text x="${x(i)}" y="${H-10}" text-anchor="middle" font-size="12" fill="#586c66">${wx[i].time.slice(11,16)}</text>`;
+ markup+=`<line x1="${x(selected)}" x2="${x(selected)}" y1="${T}" y2="${H-B}" stroke="#57796a" stroke-dasharray="4 5"/>`;
+ svg.innerHTML=markup;
+ document.getElementById('masar-weather-legend').textContent=labels.temperature+' — '+labels.rain;
+}
+
+function renderSim() {
+  if(!simulation)return;
+  const index=Number($('hour').value), road=simulation.roads[currentRoad];
+  const date=new Date(Date.parse(simulation.forecast_start)+index*3600000);
+  const matched=weather?.hours.find(item=>Date.parse(item.time+'+03:00')===date.getTime());
+  $('volume').textContent=number(road.forecast[index]);
+  $('time').textContent=formatSaudi(date);
+  $('weather').textContent=Number.isFinite(matched?.temperature_c)?number(matched.temperature_c)+' °C':'—';
+  $('weatherDetail').textContent=condition(matched)+(Number.isFinite(matched?.precipitation_probability)?' · ☂ '+number(matched.precipitation_probability)+'%':'')+' · Open-Meteo';
+  const times=road.forecast.map((_,i)=>new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Riyadh',hour:'2-digit',minute:'2-digit'}).format(new Date(Date.parse(simulation.forecast_start)+i*3600000)));
+  chart('jazan-chart',road.baseline_forecast&&simulation.traffic_weather_combined ?
+   [{values:road.baseline_forecast,color:'#9aa7a4'}, {values:road.forecast,color:'#417d58'}] :
+   [{values:road.forecast,color:'#417d58'}],'next48',times,index);
+  masarWeatherPanel(road,index);
+}
+async function loadSim() {
+  $('refresh').disabled=true;$('simStatus').textContent=t('loading');
+  const [sim,wx]=await Promise.allSettled([request('/api/jazan'),fetchWeather()]);
+  if(sim.status==='fulfilled')simulation=sim.value;
+  if(wx.status==='fulfilled')weather=wx.value;
+  if(sim.status==='fulfilled'&&!simulation.traffic_weather_combined&&wx.status==='fulfilled'){
+    const start=Date.parse(simulation.forecast_start);
+    const hours=weather.hours.filter(row=>{
+      const at=Date.parse(row.time+'+03:00');
+      return at>=start&&at<start+48*3600000;
+    }).map(({time,temperature_c,precipitation_mm})=>({time,temperature_c,precipitation_mm}));
+    if(hours.length===48){
+      try { simulation=await request('/api/jazan',{hours}); } catch {}
+    }
+  }
+  $('simStatus').textContent=sim.status==='fulfilled'?'':t('unavailable');
+  $('refresh').disabled=false;
+  if(simulation){
+    selectOptions($('road'),simulation.roads.map(r=>r[language]),currentRoad);
+    $('road').disabled=false;$('hour').disabled=false;renderSim();
+  }
+}
+function renderResult() {
+  if(!result)return;
+  $('results').hidden=false;
+  $('prediction').textContent=number(result.forecast)+' '+t('unit');
+  $('predictionTime').textContent=result.next_time.replace('T',' ')+(result.forecast_clipped?' · '+t('clipped'):'');
+  $('observations').textContent=number(result.used)+' / '+number(result.rows);
+  $('window').textContent=result.start.slice(0,10)+' → '+result.end.slice(0,10);
+  $('average').textContent=number(result.mean);
+  $('peak').textContent=t('peak')+' · '+number(result.peak);
+  $('model').textContent=result.model;
+  $('split').textContent=language==='ar'?`التدريب: ${result.train} ساعة · الاختبار الزمني: ${result.holdout} ساعة · التقييم ساعة بخطوة`:`Training: ${result.train} h · Chronological test: ${result.holdout} h · One hour ahead`;
+  for(const [id,metrics] of [['scores',result.metrics],['baseline',result.baseline]])$(id).textContent='MAE '+number(metrics.mae)+' · RMSE '+number(metrics.rmse)+' · '+t('unit');
+  $('origin').textContent=resultOrigin==='project'?t('project'):resultOrigin;
+  const times=rows=>rows.map(r=>r.time.slice(5,16).replace('T',' '));
+  chart('history-chart',[{values:result.history.map(r=>r.volume),color:'#417d58'}],'series',times(result.history));
+  chart('evaluation-chart',[{values:result.evaluation.map(r=>r.actual),color:'#417d58'},{values:result.evaluation.map(r=>r.predicted),color:'#9e642c'}],'evaluation',times(result.evaluation));
+}
+function applyLanguage() {
+  document.documentElement.lang=language;
+  document.documentElement.dir=language==='ar'?'rtl':'ltr';
+  document.querySelectorAll('[data-t]').forEach(el=>el.textContent=t(el.dataset.t));
+  $('language').textContent=language==='ar'?'English':'العربية';
+  if(simulation){selectOptions($('road'),simulation.roads.map(r=>r[language]),currentRoad);renderSim();}
+  setStatus(...status);renderResult();
+}
+function show(section) {
+  const active=section==='lab'?'lab':'jazan';
+  for(const id of ['lab','jazan'])$(id).hidden=id!==active;
+  document.querySelectorAll('[data-screen]').forEach(el=>{if(el.dataset.screen===active)el.setAttribute('aria-current','page');else el.removeAttribute('aria-current');});
+  if(active==='lab')renderResult();
+}
+async function inspect(sheet, token) {
+  $('analyze').disabled=true;setStatus('loading');
+  try{
+    const data=await request('/api/analyze/inspect',{...uploaded,sheet});
+    if(token!==fileRequest)return;
+    inspection=data;
+    $('fields').hidden=false;$('sheetWrap').hidden=!data.sheets.length;
+    selectOptions($('sheet'),data.sheets,data.sheets.indexOf(data.sheet));
+    const time=data.columns.findIndex(c=>/date|time|تاريخ|وقت/i.test(c)), count=data.columns.findIndex(c=>/volume|vehicle|traffic|مركب|عدد/i.test(c));
+    selectOptions($('timestamp'),data.columns,Math.max(0,time));
+    selectOptions($('count'),data.columns,count>=0&&count!==Math.max(0,time)?count:Math.max(0,time)===0?1:0);
+    $('analyze').disabled=false;setStatus('ready',number(data.rows));
+  }catch(error){if(token===fileRequest){$('fields').hidden=true;setStatus(error.message,'',true);}}
+}
+$('file').addEventListener('change',()=>{
+  const token=++fileRequest;runRequest++;uploaded=null;inspection=null;result=null;
+  $('results').hidden=true;$('fields').hidden=true;$('analyze').disabled=true;$('example').disabled=false;
+  const file=$('file').files[0];if(!file){setStatus('');return;}
+  if(file.size>2000000){setStatus('file_size','',true);return;}
+  if(!/\.(csv|xlsx)$/i.test(file.name)){setStatus('file_format','',true);return;}
+  setStatus('loading');const reader=new FileReader();
+  reader.onload=()=>{if(token===fileRequest){uploaded={name:file.name,file:String(reader.result).split(',')[1]};inspect(null,token);}};
+  reader.onerror=()=>{if(token===fileRequest)setStatus('file_format','',true);};
+  reader.readAsDataURL(file);
+});
+$('sheet').addEventListener('change',()=>{runRequest++;result=null;$('results').hidden=true;$('example').disabled=false;inspect(inspection.sheets[Number($('sheet').value)],++fileRequest);});
+async function analyze(useExample) {
+  if(!useExample&&!inspection)return;
+  const token=++runRequest;
+  $('example').disabled=true;$('analyze').disabled=true;result=null;$('results').hidden=true;
+  setStatus('training');
+  try {
+    const data=await request(useExample?'/api/analyze/example':'/api/analyze',useExample?{}:{...uploaded,sheet:inspection.sheet,time:$('timestamp').value,volume:$('count').value});
+    if(token!==runRequest)return;
+    result=data;resultOrigin=useExample?'project':uploaded.name;renderResult();setStatus('complete');
+  }catch(error){if(token===runRequest)setStatus(error.message,'',true);}
+  finally {if(token===runRequest){$('analyze').disabled=!inspection;$('example').disabled=false;}}
+}
+$('analyze').onclick=()=>analyze(false);$('example').onclick=()=>analyze(true);
+
+
+$('language').onclick=()=>{language=language==='ar'?'en':'ar';try{localStorage.setItem('masar-language',language);}catch{}applyLanguage();};
+applyLanguage();
+</script>
+</body>
+</html>

@@ -104,13 +104,15 @@ def application(environ,start):
  method=environ.get('REQUEST_METHOD','GET').upper();path=environ.get('PATH_INFO','/')
  try:
   if method=='GET' and path=='/':return send_file(start,ROOT/'index.html','text/html; charset=utf-8')
+  if method=='GET' and path in ('/lab','/lab/','/lab.html'):return send_file(start,ROOT/'lab.html','text/html; charset=utf-8')
+  if method=='GET' and path in ('/masar-mark.svg','/favicon.svg'):return send_file(start,ROOT/'masar-mark.svg','image/svg+xml')
   if method=='GET' and path.startswith('/static/'):
    file=(ROOT/'static'/path[len('/static/'):]).resolve()
    if (ROOT/'static').resolve() not in file.parents:return respond(start,{'error':'Invalid path'},'403 Forbidden')
    ext=file.suffix;return send_file(start,file,{'.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.csv':'text/csv; charset=utf-8'}.get(ext,'application/octet-stream'))
   if method=='GET' and path=='/jazan_city_simulation.html':
    # Link to the integrated city-specific section, not a stale exported snapshot.
-   start('302 Found',[('Location','/#jazan'),('Content-Length','0'),('Cache-Control','no-store')]);return [b'']
+   start('302 Found',[('Location','/'),('Content-Length','0'),('Cache-Control','no-store')]);return [b'']
   if method=='GET' and path=='/api/jazan':
    now=datetime.now(ZoneInfo('Asia/Riyadh'))
    try:wx=weather_for('jazan')
