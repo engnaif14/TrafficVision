@@ -1,0 +1,73 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>مسار | MASAR — التنبؤ بحركة المرور في جيزان</title>
+<meta name="description" content="مسار لتوقع حركة المرور في مدينة جيزان ومحاكاة أثر المطر والحرارة وإغلاق الطرق.">
+<meta name="application-name" content="مسار | MASAR">
+<meta property="og:site_name" content="مسار | MASAR">
+<meta property="og:title" content="مسار | التنبؤ بحركة المرور في جيزان">
+<meta property="og:description" content="استكشف حركة المرور المتوقعة وجرّب أثر الطقس وإغلاق الطرق في جيزان.">
+<meta property="og:type" content="website">
+__PUBLIC_METADATA__
+<link rel="icon" type="image/svg+xml" href="__FAVICON__"><style>__CSS__</style></head>
+<body><header class="top"><div class="wrap bar"><div class="brand"><img class="brand-mark" src="__MARK__" width="46" height="46" alt=""><b>مسار <small lang="en">MASAR</small></b></div><div class="nav"><a href="/lab" data-t="lab">مختبر التنبؤ الحالي</a><button id="present" type="button" data-t="present">وضع العرض</button><button id="lang">English</button></div></div></header>
+<main class="wrap">
+<section class="intro"><div><span class="eyebrow" data-t="preview">نسخة تجريبية</span><h1 data-t="title">محاكاة جيزان</h1><p class="tagline" data-t="tagline"></p><p data-t="intro">جرّب تأثير المطر والحرارة وإغلاق المسارات على ضغط الحركة.</p></div><label class="horizon"><span data-t="horizon">مدة التنبؤ</span><select id="horizon"></select></label></section>
+<section class="launch"><h2 data-t="explore">ابدأ استكشاف حركة المرور</h2><p data-t="choosePath">اختر أحد المسارات للبدء</p><div class="launch-grid"><a href="#simulation"><b>01</b><strong data-t="launchSim"></strong><span data-t="launchSimNote"></span></a><a href="/lab"><b>02</b><strong data-t="launchLab"></strong><span data-t="launchLabNote"></span></a><a href="#experiments"><b>03</b><strong data-t="launchResults"></strong><span data-t="launchResultsNote"></span></a></div></section><nav class="section-links" aria-label="Sections" data-aria="sectionLinks"><a href="#simulation" data-t="simulationLink">المحاكاة</a><a href="#forecast" data-t="forecastLink">التنبؤ</a><a href="#impacts" data-t="matrix">مصفوفة الأثر</a><a href="#safety" data-t="safetyLink">مؤشرات السلامة</a></nav>
+<div class="notice"><span id="weatherStatus" role="status"></span><span id="periodNote"></span><span class="snapshot-note" data-t="snapshot">حركة المرور محاكاة مبنية على بيانات افتراضية</span></div>
+<section class="workspace" id="simulation" tabindex="-1" aria-label="Jazan simulation" data-aria="title">
+<div class="controls"><aside class="card cockpit">
+<div class="section-head"><div><span class="step" data-t="step1">١ · جرّب</span><h2 data-t="what">ماذا لو؟</h2><p data-t="quickIntro">اختر مقطعًا، ثم اضغط سيناريو جاهز وشوف أثره فورًا على الخريطة.</p></div></div>
+<label class="quick-target"><span data-t="segment">المقطع</span><select id="quickTarget"></select></label>
+<div id="presets" class="presets"></div>
+<div class="actions cockpit-actions"><button id="what" data-t="customize" aria-expanded="false" aria-controls="editor">تخصيص السيناريو</button><button type="button" id="reset" data-t="reset">إعادة للمرجع</button></div>
+<div id="activeSummary" class="scenario-summary" role="status"></div>
+</aside>
+<section class="card editor" id="editor" hidden><div class="section-head"><div><h2 data-t="customize">تخصيص السيناريو</h2><p data-t="editorIntro">اضبط السيناريو للمقطع المختار، ثم قارن النتيجة بالمرجع.</p></div><button id="close" data-t="close">إغلاق</button></div>
+<form id="form"><div class="fields">
+<label><span data-t="segment">المقطع</span><select id="target"></select></label>
+<label><span data-t="start">بداية السيناريو</span><input id="start" type="datetime-local" required></label>
+<label><span data-t="duration">المدة بالساعات</span><input id="duration" type="number" min="1" max="168" step="1" value="3" required></label>
+<label><span data-t="rain">المطر (ملم/ساعة)</span><input id="rain" type="number" min="0" max="20" step=".1" placeholder="—"></label>
+<label><span data-t="temp">الحرارة (°م)</span><input id="temp" type="number" min="-20" max="65" step=".1" placeholder="—"></label>
+<label><span data-t="closure">انخفاض السعة (%)</span><select id="closure"><option value="0" data-t="openRoad">مفتوح بالكامل</option><option value="25" data-t="minorClosure">إغلاق جزئي · 25٪</option><option value="50" data-t="halfClosure">نصف السعة · 50٪</option><option value="75" data-t="majorClosure">إغلاق كبير · 75٪</option><option value="100" data-t="fullClosure">إغلاق كامل · 100٪</option></select></label>
+</div><p class="muted" data-t="blank">اترك المطر أو الحرارة فارغين لاستخدام القيمة المرجعية.</p>
+<p id="capacityExample" class="capacity-example"></p><div class="actions"><button class="primary" data-t="apply">طبّق وشاهد النتيجة</button><span id="message" role="status"></span></div></form></section></div>
+<article class="card map-card" id="mapCard">
+<div class="section-head"><div><span class="step" data-t="step2">٢ · شاهد الأثر</span><h2 data-t="map">خريطة المقاطع</h2><p data-t="schematic">طرق جيزان الفعلية · الألوان من المحاكاة</p></div></div>
+<div class="toggle" id="comparison"><button id="ref" data-t="reference" aria-pressed="true">المرجع</button><button id="scenario" data-t="scenario" aria-pressed="false">السيناريو</button></div>
+<div id="map" class="map" dir="ltr"></div><div class="map-source" dir="ltr">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a></div><div id="legend" class="legend"></div>
+<section class="detail" id="detail"></section>
+<div class="result-links"><a id="scenarioResultsLink" href="#forecast" data-t="scenarioChart" hidden>نتائج السيناريو</a><button id="scenarioHour" type="button" data-t="scenarioHour" hidden>العودة لبداية السيناريو</button><a href="#impacts" data-t="viewImpacts">قارن أثر السيناريوهات</a></div>
+<div class="timeline"><button id="play" data-t="play">▶ تشغيل</button><label><span id="moment"></span><input id="time" type="range" min="0" value="0" aria-label="Time"></label><button id="peakJump" data-t="peakJump">وقت الذروة</button></div>
+</article>
+
+</section>
+<section class="card lower" id="forecast" tabindex="-1">
+  <h2 data-t="chart">حجم المرور المتوقع</h2>
+  <div class="comparison-tabs" role="group" data-aria="chart">
+    <button id="baselineChart" type="button" aria-pressed="true" aria-controls="baselinePanel" data-t="baselineChart">المحاكاة الأساسية</button>
+    <button id="scenarioChart" type="button" aria-pressed="false" aria-controls="scenarioPanel" data-t="scenarioChart">نتائج السيناريو</button>
+  </div>
+  <div id="baselinePanel"><p id="chartNote"></p><div id="plot" dir="ltr"></div></div>
+  <div id="scenarioPanel" hidden>
+    <p id="comparisonEmpty" data-t="comparisonEmpty">طبّق سيناريو من قسم «ماذا لو؟» لبدء المقارنة.</p>
+    <div id="comparisonContent" hidden>
+      <p id="comparisonWindow"></p>
+      <div class="comparison-controls">
+        <button id="playComparison" type="button" data-t="playComparison">شغّل المقارنة</button>
+        <button id="showAnalysis" type="button" data-t="showAnalysis">عرض النتيجة مباشرة</button>
+        <span id="comparisonTime"></span><label class="speed-control"><span data-t="speed">سرعة العرض</span><select id="comparisonSpeed"><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option></select></label>
+        <button id="exportComparison" type="button" data-t="exportComparison">تصدير المقارنة CSV</button>
+      </div>
+      <progress id="comparisonProgress" value="0" max="1" data-aria="scenarioChart"></progress>
+      <div id="comparisonPlot" dir="ltr"></div>
+      <p id="comparisonReading"></p>
+      <div id="comparisonHighlights" class="result-highlights" hidden></div>
+      <section id="comparisonAnalysis" hidden aria-live="polite"></section>
+    </div>
+  </div>
+</section>
+<section class="card lower" id="experiments"><div class="section-head"><div><span class="step" data-t="studyStep"></span><h2 data-t="studyTitle"></h2><p class="muted" data-t="studyIntro"></p></div><button id="report" type="button" data-t="report"></button></div><div class="study-save"><label><span data-t="studyName"></span><input id="studyName" maxlength="70"></label><button id="saveStudy" class="primary" data-t="saveStudy"></button><button id="demoStudies" data-t="demoStudies"></button></div><p id="studyStatus" role="status"></p><p class="muted" data-t="localNotice"></p><div id="studyList" class="study-list"></div><div id="multiResults"></div><div class="assistant-panel"><h3 data-t="assistantTitle"></h3><div class="actions"><button id="askImpact" data-t="askImpact"></button><button id="askReason" data-t="askReason"></button><button id="askSource" data-t="askSource"></button></div><p id="assistantAnswer" role="status"></p></div></section><section class="card lower" id="impacts" tabindex="-1"><span class="step" data-t="step3">٣ · قارن النتائج</span><h2 data-t="matrix">مصفوفة الأثر</h2><p class="muted" data-t="matrixNote">فرق ساعات تجاوز السعة عن المرجع في المدة المحددة. اضغط خلية لعرضها على الخريطة.</p><div id="matrix" class="table-wrap" tabindex="0" role="region" data-aria="matrix"></div></section>
+<section class="card lower" id="safety" tabindex="-1"><h2 data-t="exposure">مؤشرات التعرّض المروري</h2><p class="muted" data-t="exposureNote">التعرّض للظروف المفترضة في المقطع المختار. تقدير احتمال الحوادث يحتاج بيانات حوادث فعلية.</p><div id="exposure" class="table-wrap" tabindex="0" role="region" data-aria="exposure"></div></section>
+<details class="card lower"><summary data-t="assumptions">افتراضات المحاكاة</summary><p data-t="assumptionsText"></p></details>
+<details class="card lower" id="provenance"><summary data-t="dataTitle"></summary><div id="dataDetails"></div></details><div id="toast" class="toast" role="status" hidden></div><button id="exitPresent" type="button" hidden data-t="exitPresent"></button><section id="reportView" hidden></section><footer><span>مسار | MASAR</span><span id="credits">نايف · إبراهيم · عبدالله</span></footer></main>
+<script>const DATA=__DATA__;</script><script>__JS__
+__EXPERIENCE__</script></body></html>
