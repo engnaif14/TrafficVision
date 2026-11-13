@@ -13,6 +13,7 @@ import pandas as pd
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 from jazan_model import current_simulation
 from masar_analysis import handle_analysis
+from studio_runtime import homepage
 
 ROOT=Path(__file__).resolve().parent
 METADATA=json.loads((ROOT/'data/replay_metadata.json').read_text(encoding='utf-8'))
@@ -103,7 +104,8 @@ def manual_forecast(readings):
 def application(environ,start):
  method=environ.get('REQUEST_METHOD','GET').upper();path=environ.get('PATH_INFO','/')
  try:
-  if method=='GET' and path=='/':return send_file(start,ROOT/'index.html','text/html; charset=utf-8')
+  if method=='GET' and path=='/':
+   page=homepage();start('200 OK',[('Content-Type','text/html; charset=utf-8'),('Content-Length',str(len(page))),('Cache-Control','no-cache')]);return [page]
   if method=='GET' and path in ('/lab','/lab/','/lab.html'):return send_file(start,ROOT/'lab.html','text/html; charset=utf-8')
   if method=='GET' and path in ('/masar-mark.svg','/favicon.svg'):return send_file(start,ROOT/'masar-mark.svg','image/svg+xml')
   if method=='GET' and path.startswith('/static/'):
